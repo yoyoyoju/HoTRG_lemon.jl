@@ -1,5 +1,16 @@
+"""
+	HoTRG_lemon
+
+Parent module for:  
+	SpinModule  
+	LatticeModule  
+	SimulatorModule  
+"""
 module HoTRG_lemon
 
-# package code goes here
+using TensorOperations
+using TensorMatrices_lemon
+
+include("./SpinModule/SpinModule.jl")
 
 end # module
