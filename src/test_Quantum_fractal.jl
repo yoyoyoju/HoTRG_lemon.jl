@@ -5,9 +5,9 @@ using HoTRG_lemon.LatticeModule
 using TensorOperations
 using TensorMatrices_lemon
 
-dimM = 3
+dimM = 6
 trotterparameter = 0.01
-trotteriteration = 50
+trotteriteration = 80
 
 isinginfo = SpinInfo("quantum_ising_2",1.0e-13,0.0)
 trotterinfo = TrotterInfo(trotterparameter, trotteriteration)
@@ -21,8 +21,8 @@ simulator = buildSimulator(lattice,dimM)
 # println(simulator())
 # println(sqSimulator())
 
- fieldrange = linspace(0.1,4.5,20)
- simulatorQuantum(fieldrange, simulator; filename = "./data/data_dim6_it5.txt")
+ #fieldrange = linspace(10e-7,10e-6,1)
+ simulatorQuantum(10e-7, simulator; filename = "data_dim6_it8.txt")
  # simulatorQuantum(fieldrange, sqSimulator; filename = "q2s_m6_t30_ori_m7.txt")
 #tensorT = getTensorT(simulator)[1]
 #tenmatMMd = getTenmatMMd(tensorT)
