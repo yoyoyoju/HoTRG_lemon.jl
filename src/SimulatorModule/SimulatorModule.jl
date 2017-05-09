@@ -1,8 +1,8 @@
 module SimulatorModule
-	using LatticeModule
-	using SpinModule
+	using HoTRG_lemon.LatticeModule
+	using HoTRG_lemon.SpinModule
 	using TensorOperations
-	using TenmatModule
+	using TensorMatrices_lemon
 
 	export 
 		# simulator.jl

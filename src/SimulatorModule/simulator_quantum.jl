@@ -1,4 +1,4 @@
-import LatticeModule:
+import HoTRG_lemon.LatticeModule:
 	getTrotterparameter,
 	getTrotteriteration,
 	getTrotterlayers,
