@@ -1,4 +1,4 @@
-import SpinModule: isClassical
+import HoTRG_lemon.SpinModule: isClassical
 #=
 LatticeInfo(latticecode::AbstractString)
 getDimension(latticeinfo::LatticeInfo)

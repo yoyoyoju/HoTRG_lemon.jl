@@ -1,4 +1,4 @@
-import SpinModule:
+import HoTRG_lemon.SpinModule:
 	initialize!
 
 type Quantum2dFractalLattice{T} <: Quantum2dLattice{T}

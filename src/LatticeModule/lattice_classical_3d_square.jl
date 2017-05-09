@@ -1,4 +1,4 @@
-import SpinModule:
+import HoTRG_lemon.SpinModule:
 	initialize!
 
 type Classical3dSquareLattice{T} <: Classical3dLattice{T}

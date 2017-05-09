@@ -1,7 +1,7 @@
 module LatticeModule
 	using TensorOperations
-	using TenmatModule
-	using SpinModule
+	using TensorMatrices_lemon
+	using HoTRG_lemon.SpinModule
 
 	export 
 		# lattice_info.jl

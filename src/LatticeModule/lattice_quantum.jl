@@ -1,4 +1,4 @@
-import SpinModule:
+import HoTRG_lemon.SpinModule:
 	getTrotterparameter,
 	getTrotteriteration,
 	getTrotterlayers,
