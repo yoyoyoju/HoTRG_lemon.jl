@@ -63,6 +63,21 @@ HoTRG_lemon.SpinModule.testSpinInfo
 DocTestSetup = nothing
 ```
 
+# HoTRG_lemon.LatticeModule
+
+# HoTRG_lemon.SimulaterModule
+
+## Types
+
+### Methos: SimulatorModuel
+
+- Methods to run a simulator:
+	- simulatorQuantum
+
+```@docs
+HoTRG_lemon.SimulatorModule.simulatorQuantum
+```
+
 ## Index
 
 ```@index
