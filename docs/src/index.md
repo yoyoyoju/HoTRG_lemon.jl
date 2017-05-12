@@ -9,8 +9,8 @@
 HoTRG_lemon.SpinModule
 ```
 * add:
-	* HoTRG_lemon.LatticeModule  
-	* HoTRG_lemon.SimulatorModule  
+  * HoTRG_lemon.LatticeModule  
+  * HoTRG_lemon.SimulatorModule  
 
 ```@meta
 DocTestSetup = quote
@@ -18,7 +18,7 @@ DocTestSetup = quote
 end
 ```
 
------
+--------------
 
 # HoTRG_lemon.SpinModule
 
@@ -63,16 +63,28 @@ HoTRG_lemon.SpinModule.testSpinInfo
 DocTestSetup = nothing
 ```
 
+--------------
+
 # HoTRG_lemon.LatticeModule
+
+--------------
 
 # HoTRG_lemon.SimulaterModule
 
 ## Types
 
+
 ### Methos: SimulatorModuel
 
-- Methods to run a simulator:
-	- simulatorQuantum
+* Methods to build a Simulator:
+  * `buildSimulator`
+
+```@docs
+HoTRG_lemon.SimulatorModule.buildSimulator
+```
+
+* Methods to run a simulator:
+  * simulatorQuantum
 
 ```@docs
 HoTRG_lemon.SimulatorModule.simulatorQuantum

@@ -32,6 +32,22 @@ abstract Simulator{T}
 
 #---
 # build simulator according to the type of the lattice
+"""
+	buildSimulator
+
+Build Simulator from `Lattice`.
+
+# arguments
+* `lattice`: 
+  * `Classical2dSquareLattice` with  `dimM`, `wholeiteration`
+  * `Classical2dFractalLattice` with `dimM`, `wholeiteration`
+  * `Classicl3dSquareLattice` with `dimM`, `wholeiteration`
+  * `Quantum2dSquareLattice` with `dimM`
+  * `Quantum2dFractalLattice` with `dimM`
+* `dimM::Int`: the maximum tensor size
+* `wholeiteration::Int`: For `ClassicalLattice`. How many times to  iterate.  
+For `QuantumLattice`, it is determined by `trotteriteration`.
+"""
 function buildSimulator{T}(lattice::Classical2dSquareLattice{T}, dimM::Int, wholeiteration::Int)
 	return Classical2dSquareSimulator{T}(lattice, dimM, wholeiteration)
 end

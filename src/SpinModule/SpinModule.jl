@@ -2,6 +2,64 @@
 	SpinModule
 
 Store informations about the spin model.  
+
+# Type list
+
+* SpinInfo 
+* TrotterInfo for Quantum Spins 
+* SpinModel
+* ClassicalSpinModel
+* IsingModel
+* PottsModel
+* ClockModel
+* QuantumSpinModel
+* QuantumIsingModel
+
+# Method list
+
+* Methods for SpinInfo:
+  * isZeroTemperature
+  * isClassical
+  * getmodelname
+  * getStates
+  * isSymmetricFactorization
+  * getTemperature
+  * getExternalfield
+  * getEnvParameters
+  * setTemperature!
+  * setExternalfield!
+  * setEnvParameters!
+* Methods for TrotterInfo
+  * getTrotterparameter
+  * getTrotteriteration
+  * getTrotterlayers
+  * getBeta
+  * setTrotterparameter!
+  * setTrotteriteration!
+  * iteration2layer
+* Methods for SpinModel
+  * buildSpinSystem
+  * getMeasureOperator
+  * getFactorW
+  * isPottsModel
+  * getHamiltonian
+* Methods for IsingModel
+  * initialize!
+* Methods for QuantumSpinModel
+  * checkInfo!
+* Methods for QuantumIsingModel
+  * getFactorWp
+
+
+# Test list
+
+* testSpinInfo
+* testTrotterInfo
+* testSpinModel
+* testIsingModel
+* testPottsModel
+* testClockModel
+* testQuantumIsingModel
 """
 module SpinModule
 

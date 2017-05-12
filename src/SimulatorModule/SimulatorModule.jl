@@ -1,3 +1,8 @@
+"""
+	SimulatorModule
+
+Simulator for lattice.  
+"""
 module SimulatorModule
 	using HoTRG_lemon.LatticeModule
 	using HoTRG_lemon.SpinModule
@@ -7,7 +12,7 @@ module SimulatorModule
 	export 
 		# simulator.jl
 		Simulator,
-		buildSimulator,
+		buildSimulator, #
 		getDimM,
 		getExpectationValue,
 		getFreeEnergy,
