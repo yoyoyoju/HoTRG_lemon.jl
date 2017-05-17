@@ -20,9 +20,9 @@ end
 
 --------------
 
-# HoTRG_lemon.SpinModule
+## HoTRG_lemon.SpinModule
 
-## Types
+### Types
 
 ```@docs
 HoTRG_lemon.SpinModule.SpinInfo
@@ -30,19 +30,19 @@ HoTRG_lemon.SpinModule.SpinInfo
 
 ### Methos: SpinModule
 
-- Methos for SpinModule:
-	- isZeroTemperature, 
-	- isClassical,
-	- getModelname,
-	- getStates,
-	- isSymmetricFactorization,
-	- getTemperature,
-	- getExternalfield,
-	- getEnvParameters,
-	- setTemperature!,
-	- setExternalfield!,
-	- setEnvParameters!,
-	- testSpinInfo,
+* Methos for SpinModule:
+  * isZeroTemperature, 
+  * isClassical,
+  * getModelname,
+  * getStates,
+  * isSymmetricFactorization,
+  * getTemperature,
+  * getExternalfield,
+  * getEnvParameters,
+  * setTemperature!,
+  * setExternalfield!,
+  * setEnvParameters!,
+  * testSpinInfo,
 
 ```@docs
 HoTRG_lemon.SpinModule.isZeroTemperature
@@ -65,13 +65,13 @@ DocTestSetup = nothing
 
 --------------
 
-# HoTRG_lemon.LatticeModule
+## HoTRG_lemon.LatticeModule
 
 --------------
 
-# HoTRG_lemon.SimulaterModule
+## HoTRG_lemon.SimulaterModule
 
-## Types
+### Types
 
 
 ### Methos: SimulatorModuel

@@ -1,3 +1,22 @@
+"""
+	LatticeModule
+Store information about the Lattice  
+
+# Type list
+
+* LatticeInfo
+
+# Method list
+
+* getDimension
+* getGeometry
+* getCoarserate
+* getLegextension
+* getQuantumOrClassical
+
+# Test list
+
+"""
 module LatticeModule
 	using TensorOperations
 	using TensorMatrices_lemon
