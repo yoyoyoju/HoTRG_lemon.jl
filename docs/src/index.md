@@ -7,10 +7,9 @@
 
 ```@docs
 HoTRG_lemon.SpinModule
+HoTRG_lemon.LatticeModule  
+HoTRG_lemon.SimulatorModule  
 ```
-* add:
-  * HoTRG_lemon.LatticeModule  
-  * HoTRG_lemon.SimulatorModule  
 
 ```@meta
 DocTestSetup = quote

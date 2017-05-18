@@ -90,13 +90,220 @@ Store informations about the spin model.
   * testQuantumIsingModel
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/SpinModule.jl#L1-L63' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/SpinModule.jl#L1-L63' class='documenter-source'>source</a><br>
+
+<a id='HoTRG_lemon.LatticeModule' href='#HoTRG_lemon.LatticeModule'>#</a>
+**`HoTRG_lemon.LatticeModule`** &mdash; *Module*.
 
 
-  * add:
 
-      * HoTRG_lemon.LatticeModule
-      * HoTRG_lemon.SimulatorModule
+```
+LatticeModule
+```
+
+Store information about the Lattice  
+
+**Type list**
+
+  * LatticeInfo
+  * Latttice
+  * ClassicalLattice,
+  * Classical2dLattice,
+  * Classical2dSquareLattice,
+  * Classical2dFractalLattice,
+  * QuantumLattice,
+  * Quantum2dLattice,
+  * Quantum2dSquareLattice,
+  * Classical3dLattice,
+  * Classical3dSquareLattice,
+  * Quantum2dFractalLattice,
+  * FractalLattice,
+
+**Method list**
+
+  * getDimension
+  * getGeometry
+  * getCoarserate
+  * getLegextension
+  * getQuantumOrClassical
+  * isClassical,
+  * isTwoDimension,
+  * isSquareLattice,
+  * isFractalLattice,
+  * buildLattice,
+  * initialize!,
+  * isZeroTemperature,
+  * isClassical,
+  * getModelname,
+  * getStates,
+  * isSymmetricFactorization,
+  * isPottsModel,
+  * getHamiltonian,
+  * getTemperature,
+  * getExternalfield,
+  * getEnvParameters,
+  * setTemperature!,
+  * setExternalfield!,
+  * setEnvParameters!,
+  * initialize!,
+  * getTensorT,
+  * getFactorW,
+  * getFactorWp,
+  * setTensorT!,
+  * makeTensorT,
+  * makeFactorWp,
+  * makeTensorQ,
+  * buildClassicalLattice,
+  * getSpaceDimension,
+  * buildQuantumLattice,
+  * getTrotterparameter,
+  * getTrotteriteration,
+  * getTrotterlayers,
+  * getBeta,
+  * setTrotterparameter!,
+  * setTrotterIteration!,
+  * getTensorP,
+  * getTensorQ,
+  * getLegextension,
+  * getHausdorffDim,
+  * getFractalDim,
+  * setTensorP!,
+  * setTensorQ!
+
+**Test list**
+
+  * testlatticeinfo,
+  * testClassical2dSquareLattice,
+  * testClassical2dFractalLattice,
+  * testQuantum2dSquareLattice,
+  * testClassical3dSquareLattice,
+  * testQuantum2dFractalLattice,
+
+
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./LatticeModule/LatticeModule.jl#L1-L82' class='documenter-source'>source</a><br>
+
+<a id='HoTRG_lemon.SimulatorModule' href='#HoTRG_lemon.SimulatorModule'>#</a>
+**`HoTRG_lemon.SimulatorModule`** &mdash; *Module*.
+
+
+
+```
+SimulatorModule
+```
+
+Simulator for lattice.  
+
+**Type list**
+
+  * Simulator,
+  * ClassicalSimulator,
+  * Classical2dSimulator,
+  * Classical3dSimulator,
+  * Classical2dSquareSimulator,
+  * QuantumSimulator,
+  * Quantum2dSimulator,
+  * Quantum2dSquareSimulator,
+  * Classical3dSquareSimulator,
+  * FractalSimulator,
+  * Classical2dFractalSimulator,
+  * Quantum2dFractalSimulator,
+
+**Method list**
+
+  * buildSimulator, #
+  * getDimM,
+  * getExpectationValue,
+  * getFreeEnergy,
+  * getWholeiteration,
+  * getNormalizationfactors,
+  * getData4Energy,
+  * getCount,
+  * getNumberOfSites,
+  * countUp!,
+  * countDown!,
+  * isDone,
+  * setNormalizationfactor!,
+  * normalizeTensor,
+  * writeVector,
+  * isZeroTemperature,
+  * isClassical,
+  * getModelname,
+  * getStates,
+  * isSymmetricFactorization,
+  * isPottsModel,
+  * getHamiltonian,
+  * getTemperature,
+  * getExternalfield,
+  * getEnvParameters,
+  * getCoareserate,
+  * getTensorT,
+  * getTensorW,
+  * getMeasureOperator,
+  * setTemperature!,
+  * setExternalfield!,
+  * setTensorT!,
+  * setEnvParameters!,
+  * initializeCount!,
+  * getFirstTerm,
+  * renormalize!,
+  * getTrotterCount,
+  * getSpaceCount,
+  * getTrotterparameter,
+  * getTrotteriteration,
+  * getTrotterlayers,
+  * getBeta, # changed to use trottercount
+  * setTrotterparameter!,
+  * setTrotterIteration!,
+  * renormalize,
+  * getNewTensorT_2dQ,
+  * getTensorU,
+  * getTensorV,
+  * getTenmatMMd,
+  * renormalizeX!,
+  * renormalizeZ!,
+  * renormalizeY!,
+  * truncMatrixU,
+  * matU2tenU,
+  * simulatorTemperature,
+  * simulatorQuantum,
+  * getHausdorffDim,
+  * getFractalDim,
+  * getLegextension,
+  * getTensorP,
+  * getTensorQ,
+  * getCoefficient,
+  * setTensorP!,
+  * setTensorQ!,
+  * normalizeTensor!,
+  * setNorm!,
+  * constructHalf,
+  * updateLocalTensors!,
+  * debug_updateLocalTensors!,
+  * getNewLegTensor,
+  * getNewCaretTensor,
+  * # working_simulator_q2f_re.jl
+  * renormalizeSpace!,
+  * renormalizeTrotter!,
+  * getTensorUy,
+  * # new version of
+  * # simulator_quantum_2d_square.jl
+  * updateCoefficient!,
+  * setCoefficient!,
+  * getCoefficient,
+  * # for debug:
+  * calculateCoreTensors
+
+**Test list**
+
+  * testClassical2dSquareSimulator,
+  * testQuantum2dSquareSimulator,
+  * testSimulateTemp,
+  * testClassical3dSquareSimulator,
+  * testClassical2dFractalSimulator,
+  * testQuantum2dFractalSimulator,
+
+
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SimulatorModule/SimulatorModule.jl#L1-L112' class='documenter-source'>source</a><br>
 
 
 
@@ -159,7 +366,7 @@ HoTRG_lemon.SpinModule.SpinInfo{Float64}("quantum","ising",2,"sym",1.5,2.0)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L17-L56' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L17-L56' class='documenter-source'>source</a><br>
 
 
 <a id='Methos:-SpinModule-1'></a>
@@ -199,7 +406,7 @@ false
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L211-L220' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L211-L220' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.isClassical' href='#HoTRG_lemon.SpinModule.isClassical'>#</a>
 **`HoTRG_lemon.SpinModule.isClassical`** &mdash; *Function*.
@@ -218,7 +425,7 @@ false
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L139-L148' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L139-L148' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.getModelname' href='#HoTRG_lemon.SpinModule.getModelname'>#</a>
 **`HoTRG_lemon.SpinModule.getModelname`** &mdash; *Function*.
@@ -237,7 +444,7 @@ julia> HoTRG_lemon.SpinModule.getModelname(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L125-L134' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L125-L134' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.getStates' href='#HoTRG_lemon.SpinModule.getStates'>#</a>
 **`HoTRG_lemon.SpinModule.getStates`** &mdash; *Function*.
@@ -256,7 +463,7 @@ julia> HoTRG_lemon.SpinModule.getStates(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L157-L166' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L157-L166' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.isSymmetricFactorization' href='#HoTRG_lemon.SpinModule.isSymmetricFactorization'>#</a>
 **`HoTRG_lemon.SpinModule.isSymmetricFactorization`** &mdash; *Function*.
@@ -275,7 +482,7 @@ true
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L171-L180' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L171-L180' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.getTemperature' href='#HoTRG_lemon.SpinModule.getTemperature'>#</a>
 **`HoTRG_lemon.SpinModule.getTemperature`** &mdash; *Function*.
@@ -294,7 +501,7 @@ julia> HoTRG_lemon.SpinModule.getTemperature(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L189-L198' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L189-L198' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.getExternalfield' href='#HoTRG_lemon.SpinModule.getExternalfield'>#</a>
 **`HoTRG_lemon.SpinModule.getExternalfield`** &mdash; *Function*.
@@ -313,7 +520,7 @@ julia> HoTRG_lemon.SpinModule.getExternalfield(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L225-L234' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L225-L234' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.getEnvParameters' href='#HoTRG_lemon.SpinModule.getEnvParameters'>#</a>
 **`HoTRG_lemon.SpinModule.getEnvParameters`** &mdash; *Function*.
@@ -332,7 +539,7 @@ julia> HoTRG_lemon.SpinModule.getEnvParameters(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L239-L248' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L239-L248' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.setTemperature!' href='#HoTRG_lemon.SpinModule.setTemperature!'>#</a>
 **`HoTRG_lemon.SpinModule.setTemperature!`** &mdash; *Function*.
@@ -353,7 +560,7 @@ julia> HoTRG_lemon.SpinModule.getTemperature(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L253-L264' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L253-L264' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.setExternalfield!' href='#HoTRG_lemon.SpinModule.setExternalfield!'>#</a>
 **`HoTRG_lemon.SpinModule.setExternalfield!`** &mdash; *Function*.
@@ -374,7 +581,7 @@ julia> HoTRG_lemon.SpinModule.getExternalfield(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L269-L280' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L269-L280' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.setEnvParameters!' href='#HoTRG_lemon.SpinModule.setEnvParameters!'>#</a>
 **`HoTRG_lemon.SpinModule.setEnvParameters!`** &mdash; *Function*.
@@ -395,7 +602,7 @@ julia> HoTRG_lemon.SpinModule.getEnvParameters(spininfo)
 ```
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L285-L296' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L285-L296' class='documenter-source'>source</a><br>
 
 <a id='HoTRG_lemon.SpinModule.testSpinInfo' href='#HoTRG_lemon.SpinModule.testSpinInfo'>#</a>
 **`HoTRG_lemon.SpinModule.testSpinInfo`** &mdash; *Function*.
@@ -411,7 +618,7 @@ Test SpinInfo for quantum ising model.
 `testSpininfo()`
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SpinModule/spin_info.jl#L305-L311' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SpinModule/spin_info.jl#L305-L311' class='documenter-source'>source</a><br>
 
 
 
@@ -472,7 +679,7 @@ Build Simulator from `Lattice`.
 For `QuantumLattice`, it is determined by `trotteriteration`.
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SimulatorModule/simulator.jl#L35-L50' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SimulatorModule/simulator.jl#L35-L50' class='documenter-source'>source</a><br>
 
 
   * Methods to run a simulator:
@@ -499,7 +706,7 @@ Get the results from simulator quantum spin system.
   * `filename = "Data.txt"`: name of the file for the results
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SimulatorModule/simulator_quantum_data.jl#L1-L13' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SimulatorModule/simulator_quantum_data.jl#L1-L13' class='documenter-source'>source</a><br>
 
 
 ```
@@ -509,13 +716,15 @@ simulatorQuantum{T}(externalfield::T, simulator::QuantumSimulator{T}; verbose = 
 Simulate for some external field. Append onto "Data_.txt" file.
 
 
-<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/af29c35545d29fa90b34d326506f17af4c99c733/src/./SimulatorModule/simulator_quantum_data.jl#L31-L35' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/yoyoyoju/HoTRG_lemon.jl/tree/b7ea5cdd24860957d30127e96f3cae9fb5400942/src/./SimulatorModule/simulator_quantum_data.jl#L31-L35' class='documenter-source'>source</a><br>
 
 
 <a id='Index-1'></a>
 
 ## Index
 
+- [`HoTRG_lemon.LatticeModule`](index.md#HoTRG_lemon.LatticeModule)
+- [`HoTRG_lemon.SimulatorModule`](index.md#HoTRG_lemon.SimulatorModule)
 - [`HoTRG_lemon.SpinModule`](index.md#HoTRG_lemon.SpinModule)
 - [`HoTRG_lemon.SpinModule.SpinInfo`](index.md#HoTRG_lemon.SpinModule.SpinInfo)
 - [`HoTRG_lemon.SimulatorModule.buildSimulator`](index.md#HoTRG_lemon.SimulatorModule.buildSimulator)
