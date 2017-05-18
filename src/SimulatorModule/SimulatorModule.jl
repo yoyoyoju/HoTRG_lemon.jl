@@ -1,7 +1,114 @@
 """
 	SimulatorModule
-
 Simulator for lattice.  
+
+# Type list
+* Simulator,
+* ClassicalSimulator,
+* Classical2dSimulator,
+* Classical3dSimulator,
+* Classical2dSquareSimulator,
+* QuantumSimulator,
+* Quantum2dSimulator,
+* Quantum2dSquareSimulator,
+* Classical3dSquareSimulator,
+* FractalSimulator,
+* Classical2dFractalSimulator,
+* Quantum2dFractalSimulator,
+
+# Method list
+* buildSimulator, #
+* getDimM,
+* getExpectationValue,
+* getFreeEnergy,
+* getWholeiteration,
+* getNormalizationfactors,
+* getData4Energy,
+* getCount,
+* getNumberOfSites,
+* countUp!,
+* countDown!,
+* isDone,
+* setNormalizationfactor!,
+* normalizeTensor,
+* writeVector,
+* isZeroTemperature,
+* isClassical,
+* getModelname,
+* getStates,
+* isSymmetricFactorization,
+* isPottsModel,
+* getHamiltonian,
+* getTemperature,
+* getExternalfield,
+* getEnvParameters,
+* getCoareserate,
+* getTensorT,
+* getTensorW,
+* getMeasureOperator,
+* setTemperature!,
+* setExternalfield!,
+* setTensorT!,
+* setEnvParameters!,
+* initializeCount!,
+* getFirstTerm,
+* renormalize!,
+* getTrotterCount,
+* getSpaceCount,
+* getTrotterparameter,
+* getTrotteriteration,
+* getTrotterlayers,
+* getBeta, # changed to use trottercount
+* setTrotterparameter!,
+* setTrotterIteration!,
+* renormalize,
+* getNewTensorT_2dQ,
+* getTensorU,
+* getTensorV,
+* getTenmatMMd,
+* renormalizeX!,
+* renormalizeZ!,
+* renormalizeY!,
+* truncMatrixU,
+* matU2tenU,
+* simulatorTemperature,
+* simulatorQuantum,
+* getHausdorffDim,
+* getFractalDim,
+* getLegextension,
+* getTensorP,
+* getTensorQ,
+* getCoefficient,
+* setTensorP!,
+* setTensorQ!,
+* normalizeTensor!,
+* setNorm!,
+* constructHalf,
+* updateLocalTensors!,
+* debug_updateLocalTensors!,
+* getNewLegTensor,
+* getNewCaretTensor,
+* # working_simulator_q2f_re.jl
+* renormalizeSpace!,
+* renormalizeTrotter!,
+* getTensorUy,
+* # new version of
+* # simulator_quantum_2d_square.jl
+* updateCoefficient!,
+* setCoefficient!,
+* getCoefficient,
+* # for debug:
+* calculateCoreTensors
+
+
+
+# Test list
+* testClassical2dSquareSimulator,
+* testQuantum2dSquareSimulator,
+* testSimulateTemp,
+* testClassical3dSquareSimulator,
+* testClassical2dFractalSimulator,
+* testQuantum2dFractalSimulator,
 """
 module SimulatorModule
 	using HoTRG_lemon.LatticeModule

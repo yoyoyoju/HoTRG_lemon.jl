@@ -5,6 +5,18 @@ Store information about the Lattice
 # Type list
 
 * LatticeInfo
+* Latttice
+* ClassicalLattice,
+* Classical2dLattice,
+* Classical2dSquareLattice,
+* Classical2dFractalLattice,
+* QuantumLattice,
+* Quantum2dLattice,
+* Quantum2dSquareLattice,
+* Classical3dLattice,
+* Classical3dSquareLattice,
+* Quantum2dFractalLattice,
+* FractalLattice,
 
 # Method list
 
@@ -13,8 +25,59 @@ Store information about the Lattice
 * getCoarserate
 * getLegextension
 * getQuantumOrClassical
+* isClassical,
+* isTwoDimension,
+* isSquareLattice,
+* isFractalLattice,
+* buildLattice,
+* initialize!,
+* isZeroTemperature,
+* isClassical,
+* getModelname,
+* getStates,
+* isSymmetricFactorization,
+* isPottsModel,
+* getHamiltonian,
+* getTemperature,
+* getExternalfield,
+* getEnvParameters,
+* setTemperature!,
+* setExternalfield!,
+* setEnvParameters!,
+* initialize!,
+* getTensorT,
+* getFactorW,
+* getFactorWp,
+* setTensorT!,
+* makeTensorT,
+* makeFactorWp,
+* makeTensorQ,
+* buildClassicalLattice,
+* getSpaceDimension,
+* buildQuantumLattice,
+* getTrotterparameter,
+* getTrotteriteration,
+* getTrotterlayers,
+* getBeta,
+* setTrotterparameter!,
+* setTrotterIteration!,
+* getTensorP,
+* getTensorQ,
+* getLegextension,
+* getHausdorffDim,
+* getFractalDim,
+* setTensorP!,
+* setTensorQ!
+
 
 # Test list
+
+* testlatticeinfo,
+* testClassical2dSquareLattice,
+* testClassical2dFractalLattice,
+* testQuantum2dSquareLattice,
+* testClassical3dSquareLattice,
+* testQuantum2dFractalLattice,
 
 """
 module LatticeModule
