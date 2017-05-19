@@ -263,7 +263,7 @@ end
 
 function getWallCaretProjectorZ{T}(tensorWall::Array{T,5}, tensorCaret::Array{T,3}, dimM::Int)
 	tenmatMMd = getTenmatMMd_WallCaret(tensorWall, tensorCaret)
-	projectorWallCaret = getProjectorFromMMd(tenmatMMd, dimM)
+	projectorWallCaret, lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 	return projectorWallCaret
 end
 
@@ -309,7 +309,7 @@ end
 
 function getLegWallProjectorZ{T}(tensorLeg::Array{T,4}, tensorWall::Array{T,5}, dimM::Int)
 	tenmatMMd = getTenmatMMd_LegWall(tensorLeg, tensorWall)
-	projectorLegWall = getProjectorFromMMd(tenmatMMd, dimM)
+	projectorLegWall, lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 	return projectorLegWall
 end
 
@@ -347,7 +347,7 @@ end
 
 function getWallCoreProjectorZ{T}(tensorWall::Array{T,5}, tensorCore::Array{T,6}, dimM::Int)
 	tenmatMMd = getTenmatMMd_WallCore(tensorWall, tensorCore)
-	projectorWallCore = getProjectorFromMMd(tenmatMMd, dimM)
+	projectorWallCore, lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 	return projectorWallCore
 end
 
@@ -403,7 +403,7 @@ end
 
 function getScProjectorZ{T}(tensorCaretY::Array{T,3}, tensorCore::Array{T,6}, dimM)
 	tenmatMMd = getTenmatMMd_caretCore(tensorCaretY, tensorCore)
-	tensorScProjectorZ = getProjectorFromMMd(tenmatMMd, dimM)
+	tensorScProjectorZ, lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 	return tensorScProjectorZ
 end
 
@@ -461,7 +461,7 @@ end
 
 function getSProjectorZ{T}(tensorLegY::Array{T,4}, tensorCore::Array{T,6}, dimM::Int)
 	tenmatMMd = getTenmatMMd_legCore(tensorLegY, tensorCore)
-	tensorSProjectorZ = getProjectorFromMMd(tenmatMMd, dimM)
+	tensorSProjectorZ,lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 	return tensorSProjectorZ
 end
 
@@ -508,7 +508,7 @@ end
 
 function getCaretProjectorZ{T}(tensorQ::Array{T,4}, dimM::Int)
 	tenmatMMd = getTenmatMMd_caret(tensorQ)
-	caretProjectorZ = getProjectorFromMMd(tenmatMMd, dimM)
+	caretProjectorZ, lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 	return caretProjectorZ
 end
 
@@ -561,7 +561,7 @@ end
 
 function getLegProjectorZ{T}(tensorPx::Array{T,5}, dimM::Int)
 	tenmatMMd = getTenmatMMd_leg(tensorPx)
-	legProjectorZ = getProjectorFromMMd(tenmatMMd, dimM)
+	legProjectorZ,lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 	return legProjectorZ
 end
 	
@@ -628,7 +628,7 @@ function getTensorUy{T}(dimM::Int, axis::AbstractString, tensorT::Array{T,6}; mi
 		else
 			tenmatMMd = getTenmatMMd_CoreCore(tensorT)
 		end
-		tensorUy = getProjectorFromMMd(tenmatMMd, dimM)
+		tensorUy, lambdaVector = getProjectorFromMMd(tenmatMMd, dimM)
 		return tensorUy
 	end
 end
@@ -666,7 +666,7 @@ function getProjectorFromMMd{T}(matrix::Array{T,2},dimM::Int)
 	tensorU, lambdaVector, tensorUd = svd(matrix)
 	truncatedU = truncMatrixU(tensorU,dimM)
 	tensorU = matU2tenU(truncatedU)
-	return tensorU
+	return tensorU, lambdaVector
 end
 
 function getProjectorFromMMd{T}(tenmatMMd::Tenmat{T}, dimM::Int)
@@ -675,7 +675,7 @@ function getProjectorFromMMd{T}(tenmatMMd::Tenmat{T}, dimM::Int)
 	tensorU, lambdaVector, tensorUd = svd(projectorMatrix)
 	truncatedU = truncMatrixU(tensorU,dimM)
 	tensorU = matU2tenU_asym(truncatedU, indicesTuple)
-	return tensorU
+	return tensorU, lambdaVector
 end
 
 function matU2tenU_asym(matrixU::Matrix, indicesTuple::Tuple{Int,Int})

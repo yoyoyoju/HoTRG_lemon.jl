@@ -2,6 +2,11 @@
 	SimulatorModule
 Simulator for lattice.  
 
+# modifying _move this when finished_
+* simulator_quantum_2d_fractal_initialiteration.jl  
+  for adding additional iterations for the trotter layer
+  * getSingularValues
+
 # Type list
 * Simulator,
 * ClassicalSimulator,
@@ -260,5 +265,6 @@ module SimulatorModule
 	include("simulator_classical_2d_fractal_2.jl")
 	include("simulator_classical_2d_fractal_renormalize_2.jl")
 	include("simulator_fractal.jl")
+	include("simulator_quantum_2d_fractal_initialiteration.jl")
 
 end
