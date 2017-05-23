@@ -20,6 +20,7 @@ Simulator for lattice.
 * FractalSimulator,
 * Classical2dFractalSimulator,
 * Quantum2dFractalSimulator,
+* Quantum2dFractalInititerSimulator <- working
 
 # Method list
 * buildSimulator, #
@@ -104,6 +105,7 @@ Simulator for lattice.
 * getCoefficient,
 * # for debug:
 * calculateCoreTensors
+* getInititeration(simulator::Quantum2dFractalinititerSimulator)
 
 
 
@@ -239,7 +241,11 @@ module SimulatorModule
 		setCoefficient!,
 		getCoefficient,
 		# for debug:
-		calculateCoreTensors
+		calculateCoreTensors,
+		# simulator_quantum_2d_fractal_inititer.jl
+		Quantum2dFractalInititerSimulator,
+		getInititeration
+
 
 
 
@@ -265,6 +271,6 @@ module SimulatorModule
 	include("simulator_classical_2d_fractal_2.jl")
 	include("simulator_classical_2d_fractal_renormalize_2.jl")
 	include("simulator_fractal.jl")
-	include("simulator_quantum_2d_fractal_initialiteration.jl")
+	include("simulator_quantum_2d_fractal_inititer.jl")
 
 end

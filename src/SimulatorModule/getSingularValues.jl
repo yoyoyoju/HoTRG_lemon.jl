@@ -49,3 +49,5 @@ end
 function getSingularValues{T}(tensorT::Array{T,N})
 end
 
+
+

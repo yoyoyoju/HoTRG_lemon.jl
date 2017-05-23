@@ -6,6 +6,20 @@ getStates
 
 =#
 
+"""
+	QuantumIsingModel
+store information for quantum ising model  
+
+```julia
+externalfield = 1.0e-13
+temperature = 0.0
+spininfo = SpinInfo("quantum_ising_2","asym",externalfield,temperature)
+trotterparameter = 0.01
+trotteriteration = 100
+trotterinfo = TrotterInfo(trotterparameter, trotteriteration)
+testModel = QuantumIsingModel(spininfo, trotterinfo)
+```
+"""
 type QuantumIsingModel{T} <:QuantumSpinModel{T}
 	spininfo::SpinInfo{T}
 	trotterinfo::TrotterInfo{T}
