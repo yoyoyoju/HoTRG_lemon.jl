@@ -10,7 +10,8 @@ import HoTRG_lemon.LatticeModule:
 
 FractalSimulators = [
 					 :Classical2dFractalSimulator,
-					 :Quantum2dFractalSimulator
+					 :Quantum2dFractalSimulator,
+					 :Quantum2dFractalInititerSimulator
 					]
 
 #

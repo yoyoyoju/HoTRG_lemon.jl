@@ -1,7 +1,7 @@
 # simulator_quantum_2d_fractal_inititer.jl
 
 """
-	Quantum2dFractalinititerSimulator
+	Quantum2dFractalInititerSimulator
 simulator for 2d quantum spins on fractal lattice with initial iteration.  
 
 `inititeration::Int` is added to the `Quantum2dFractalSimulator`.  
@@ -15,6 +15,7 @@ simulator for 2d quantum spins on fractal lattice with initial iteration.
 # Test whether it works:
 
 * build the Simulator
+get things from testQuantumInit or something...
 ```julia
 ising = HoTRG_lemon.SpinModule.Spin
 ```
@@ -107,9 +108,11 @@ function (simulator::Quantum2dFractalInititerSimulator)()
 	initializeCoefficients!(simulator)
 	countUp!(simulator)
 	normalizeTensor!(simulator) 
-	#= ADD HERE!!!
-	add the initial iteration steps
-	=#
+	for i = 1:getInititeration(simulator)
+		countUp!(simulator)
+		renormalizeSpace!(simulator, getDimM(simulator))
+ 		updateCoefficients!(simulator)
+	end
 	while true
 		countUp!(simulator)
 		renormalizeSpace!(simulator, getDimM(simulator))
