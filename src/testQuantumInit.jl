@@ -7,19 +7,20 @@ using TensorMatrices_lemon
 
 dimM = 5
 trotterparameter = 0.01
-trotteriteration = 50
+trotteriteration = 70
 
 isinginfo = SpinInfo("quantum_ising_2",1.0e-13,0.0)
 trotterinfo = TrotterInfo(trotterparameter, trotteriteration)
 ising = QuantumIsingModel(isinginfo, trotterinfo)
 lattice = buildLattice("quantum_2d_fractal", ising)
-simulator0 = Quantum2dFractalInititerSimulator(lattice, dimM, 0)
+# simulator0 = Quantum2dFractalInititerSimulator(lattice, dimM, 0)
 simulator = buildSimulator(lattice,dimM)
 #simulator = buildSimulator(lattice,dimM)
 
 fieldrange = linspace(0.1,3.5,10)
-simulatorQuantum(fieldrange, simulator; filename = "data.txt")
-simulatorQuantum(fieldrange, simulator0; filename = "data0.txt")
+simulatorQuantum(fieldrange, simulator; filename = "datai1.txt")
+println("fractal---------------")
+# simulatorQuantum(fieldrange, simulator0; filename = "data0.txt")
 #tensorT = getTensorT(simulator)[1]
 #tenmatMMd = getTenmatMMd(tensorT)
 #Ul, lambdaVector, Uld = svd(tenmatMMd.matrix)
