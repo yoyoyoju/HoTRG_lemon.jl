@@ -1,6 +1,15 @@
 import HoTRG_lemon.SpinModule:
 	initialize!
 
+"""
+	Quantum2dFractalLattice
+
+# arguments
+
+* `spinmodel::QuantumSpinModel`
+* `legextension::Int`  
+  default value is one. set zero for the normal square lattice.
+"""
 type Quantum2dFractalLattice{T} <: Quantum2dLattice{T}
 	spinmodel::QuantumSpinModel{T}
 	legextension::Int

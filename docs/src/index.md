@@ -27,9 +27,9 @@ end
 HoTRG_lemon.SpinModule.SpinInfo
 ```
 
-### Methos: SpinModule
+### Methods: SpinModule
 
-* Methos for SpinModule:
+* Methods for SpinModule:
   * isZeroTemperature, 
   * isClassical,
   * getModelname,
@@ -58,13 +58,18 @@ HoTRG_lemon.SpinModule.setEnvParameters!
 HoTRG_lemon.SpinModule.testSpinInfo
 ```
 
-```@meta
-DocTestSetup = nothing
-```
 
 --------------
 
 ## HoTRG_lemon.LatticeModule
+
+### Types
+
+```@docs
+HoTRG_lemon.LatticeModule.Quantum2dFractalLattice
+```
+
+### Methods:
 
 --------------
 
@@ -73,7 +78,7 @@ DocTestSetup = nothing
 ### Types
 
 
-### Methos: SimulatorModuel
+### Methods: SimulatorModuel
 
 * Methods to build a Simulator:
   * `buildSimulator`
@@ -87,6 +92,10 @@ HoTRG_lemon.SimulatorModule.buildSimulator
 
 ```@docs
 HoTRG_lemon.SimulatorModule.simulatorQuantum
+```
+
+```@meta
+DocTestSetup = nothing
 ```
 
 ## Index
