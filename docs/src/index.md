@@ -71,11 +71,19 @@ HoTRG_lemon.LatticeModule.Quantum2dFractalLattice
 
 ### Methods:
 
+```@docs
+HoTRG_lemon.LatticeModule.initialize!
+```
+
 --------------
 
 ## HoTRG_lemon.SimulaterModule
 
 ### Types
+
+```@docs
+HoTRG_lemon.SimulatorModule.Quantum2dFractalSimulator
+```
 
 
 ### Methods: SimulatorModuel
@@ -93,6 +101,9 @@ HoTRG_lemon.SimulatorModule.buildSimulator
 ```@docs
 HoTRG_lemon.SimulatorModule.simulatorQuantum
 ```
+
+
+
 
 ```@meta
 DocTestSetup = nothing
