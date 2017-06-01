@@ -81,6 +81,21 @@ end
 #---
 # run the simulator
 
+"""
+* initial setup
+
+**loop**
+* spatial renormalization
+* trotter renormalization
+
+* get measurements
+
+-----
+The variables to update:
+* count
+* normalization factor
+* coefficients
+"""
 function (simulator::Quantum2dFractalSimulator)()
 	initializeCount!(simulator) # set to be zero
 	initializeCoefficients!(simulator)
