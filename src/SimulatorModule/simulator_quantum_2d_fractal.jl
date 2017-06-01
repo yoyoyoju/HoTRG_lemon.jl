@@ -1,4 +1,10 @@
+"""
+	Quantum2dFractalSimulator
 
+# arguments
+* `lattice::Quantum2dFractalLattice`
+* `dimM::Int` the maximum dimension for the tensors
+"""
 type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	dimM::Int
 	wholeiteration::Int
@@ -41,27 +47,15 @@ function (simulator::Quantum2dFractalSimulator){T}()
 	initializeCoefficients!(simulator)
 	while true
 		countUp!(simulator) # space count
-		######
 		renormalizeSpace!(simulator.lattice, getDimM(simulator))
 		normalizeTensor!(simulator)
 		updateCoefficients!(simulator)
 
 		countUp!(simulator, "trotter") # trotter count
-		######
 		renormalizeTrotter!()
 		normalizeTensor!(simulator)
 		updateCoefficients!(simulator,"trotter")
 
-		
-
-
-		##### debug
-		##### maybe the norm gets too small
-		# println(maximum(abs(tenT)))
-		# println(sum(isnan(tenT)))
-		# norm = getNorm(simulator,3,getCount(simulator))
-		# println(norm)
-		##### debug/
 		if getCount(simulator) > getWholeiteration(simulator)
 			break
 		end

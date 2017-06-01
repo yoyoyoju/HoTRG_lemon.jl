@@ -270,8 +270,9 @@ module SimulatorModule
 	include("simulator_classical_3d_square_renormalize.jl")
 	include("simulator_classical_2d_fractal_2.jl")
 	include("simulator_classical_2d_fractal_renormalize_2.jl")
-	include("simulator_quantum_2d_fractal_inititer.jl")
-	include("renormalize_simulator_quantum_2d_fractal_inititer.jl")
+	include("simulator_quantum_2d_fractal.jl")
+	# include("simulator_quantum_2d_fractal_inititer.jl")
+	# include("renormalize_simulator_quantum_2d_fractal_inititer.jl")
 	include("simulator_fractal.jl")
 
 end
