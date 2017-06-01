@@ -33,6 +33,10 @@ Quantum2dFractalLattice{T}(spinmodel, 1)
 
 #---
 # initialize functions for constructor
+"""
+	initialize(lattice::Quantum2dFractalLattice)
+initialize and set tensorT, tensorTtilde, tensorP and tensorQ.  
+"""
 function initialize!{T}(lattice::Quantum2dFractalLattice{T})
 	lattice.tensorT = initializeTensorT2dQ(lattice.spinmodel)
 	lattice.tensorTtilde = initializeTensorT2dQ(lattice.spinmodel; tilde = true)
