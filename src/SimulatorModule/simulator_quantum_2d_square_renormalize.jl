@@ -9,11 +9,11 @@ function renormalize{T}(tensorT1::Array{T,6}, tensorT2::Array{T,6}, dimM::Int; w
 	tensorU = getTensorU(tensorT, dimM)
 	tensorV = getTensorV(tensorT, dimM)
 	newTensorT = getNewTensorT_2dQ(tensorT, tensorT, tensorU, tensorV)
-# 	normalizationFactor = maximum(newTensorT)
- 	newTensorTtilde = getNewTensorT_2dQ(tensorT1, tensorT2, tensorU, tensorV)
-# 	newTensorTtilde = newTensorTtilde./ normalizationFactor
-# 	newTensorT = newTensorT./ normalizationFactor
-	return newTensorT, newTensorTtilde
+	normalizationFactor = maximum(newTensorT)
+	newTensorTtilde = getNewTensorT_2dQ(tensorT1, tensorT2, tensorU, tensorV)
+	newTensorTtilde = newTensorTtilde./ normalizationFactor
+	newTensorT = newTensorT./ normalizationFactor
+	return newTensorT, newTensorTtilde, normalizationFactor
 end
 
 function getNewTensorT_2dQ{T}(tensorT1::Array{T,6}, tensorT2::Array{T,6}, tensorU::Array{T,3}, tensorV::Array{T,3})

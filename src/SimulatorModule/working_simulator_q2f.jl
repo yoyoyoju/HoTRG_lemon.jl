@@ -1,5 +1,12 @@
 # simulator_quantum_2d_fractal.jl
 
+"""
+	Quantum2dFractalSimulator
+
+# arguments
+* `lattice::Quantum2dFractalLattice`
+* `dimM::Int` the maximum dimension for the tensors
+"""
 type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	dimM::Int
 	wholeiteration::Int
@@ -65,6 +72,7 @@ function printCoefficients(simulator::Quantum2dFractalSimulator)
 	iteration = getWholeiteration(simulator) +2 -getCount(simulator)
 	println(simulator.coefficients[iteration,:])
 end
+
 function printNormalizationFactor(simulator::Quantum2dFractalSimulator)
 	iteration = getCount(simulator)
 	println(simulator.normalizationFactor[iteration,:])
@@ -72,11 +80,6 @@ end
 
 #---
 # run the simulator
-
-##### the dimension values to store the norms and coefs:
-##### figure out better way to point them in:
-##### normalizeTensor!
-##### initializeCoefficients!
 
 function (simulator::Quantum2dFractalSimulator)()
 	initializeCount!(simulator) # set to be zero
