@@ -109,10 +109,9 @@ function (simulator::Quantum2dFractalInititerSimulator)()
 	countUp!(simulator)
 	normalizeTensor!(simulator) 
 	for i = 1:getInititeration(simulator)
- 		countUp!(simulator, "trotter")
- 		renormalizeTrotter!(simulator, getDimM(simulator))
- 		normalizeTensor!(simulator)
- 		updateCoefficients!(simulator,"trotter")
+		countUp!(simulator)
+		renormalizeSpace!(simulator, getDimM(simulator))
+ 		updateCoefficients!(simulator)
 	end
 	while true
 		countUp!(simulator)
