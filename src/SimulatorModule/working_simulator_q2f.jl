@@ -72,9 +72,22 @@ function getIndexOf(simulator::Quantum2dFractalSimulator, normname::AbstractStri
 	return indexof
 end
 
+function printCoefficientsLabel(simulator::Quantum2dFractalSimulator)
+	print("count", "\t")
+	for i = 1:getLengthOfNormList(simulator)
+		print(getListOfNormFactors(simulator)[i],"\t")
+	end
+	println()
+end
+	 
 function printCoefficients(simulator::Quantum2dFractalSimulator)
 	iteration = getWholeiteration(simulator) +2 -getCount(simulator)
-	println(simulator.coefficients[iteration,:])
+	lengCoef = getLengthOfNormList(simulator)
+	print(iteration, "\t")
+	for i = 1:lengCoef
+		@printf "%.5e\t" simulator.coefficients[iteration,i]
+	end
+	println()
 end
 
 function printNormalizationFactor(simulator::Quantum2dFractalSimulator)
@@ -99,6 +112,16 @@ The variables to update:
 * count
 * normalization factor
 * coefficients
+
+
+--------
+--------
+
+things checked :
+
+* count - ok
+* coefficients - 
+
 """
 function (simulator::Quantum2dFractalSimulator)()
 	initializeCount!(simulator) # set to be zero
@@ -106,26 +129,24 @@ function (simulator::Quantum2dFractalSimulator)()
 	countUp!(simulator)
 	normalizeTensor!(simulator) 
 	
-	println(getCount(simulator))
+	printCoefficientsLabel(simulator)
 	# printNormalizationFactor(simulator)
-	# printCoefficients(simulator)
+	printCoefficients(simulator)
 	while true
 		countUp!(simulator)
 		renormalizeSpace!(simulator, getDimM(simulator))
  		updateCoefficients!(simulator)
-	println(getCount(simulator))
 	# printNormalizationFactor(simulator)
 	# magnetization = getExpectationValue(simulator) ###debug
-	# printCoefficients(simulator)
+	printCoefficients(simulator)
  
  		countUp!(simulator, "trotter")
  		renormalizeTrotter!(simulator, getDimM(simulator))
  		normalizeTensor!(simulator)
  		updateCoefficients!(simulator,"trotter")
-	println(getCount(simulator))
 	# printNormalizationFactor(simulator)
 	# magnetization = getExpectationValue(simulator) ###debug
-	# printCoefficients(simulator)
+	printCoefficients(simulator)
  		if getCount(simulator) > getWholeiteration(simulator)
  			break
  		end
