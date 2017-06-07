@@ -6,6 +6,10 @@
 # arguments
 * `lattice::Quantum2dFractalLattice`
 * `dimM::Int` the maximum dimension for the tensors
+
+# to do:
+1. bug fixing
+2. merge inititer to this
 """
 type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	dimM::Int
@@ -101,14 +105,15 @@ function (simulator::Quantum2dFractalSimulator)()
 	initializeCoefficients!(simulator)
 	countUp!(simulator)
 	normalizeTensor!(simulator) 
-	# println(getCount(simulator))
+	
+	println(getCount(simulator))
 	# printNormalizationFactor(simulator)
 	# printCoefficients(simulator)
 	while true
 		countUp!(simulator)
 		renormalizeSpace!(simulator, getDimM(simulator))
  		updateCoefficients!(simulator)
-	# println(getCount(simulator))
+	println(getCount(simulator))
 	# printNormalizationFactor(simulator)
 	# magnetization = getExpectationValue(simulator) ###debug
 	# printCoefficients(simulator)
@@ -117,7 +122,7 @@ function (simulator::Quantum2dFractalSimulator)()
  		renormalizeTrotter!(simulator, getDimM(simulator))
  		normalizeTensor!(simulator)
  		updateCoefficients!(simulator,"trotter")
-	# println(getCount(simulator))
+	println(getCount(simulator))
 	# printNormalizationFactor(simulator)
 	# magnetization = getExpectationValue(simulator) ###debug
 	# printCoefficients(simulator)
