@@ -120,33 +120,44 @@ The variables to update:
 things checked :
 
 * count - ok
-* coefficients - 
+* coefficients - ok for n_T at least
+* print out Norms
 
 """
-function (simulator::Quantum2dFractalSimulator)()
+function (simulator::Quantum2dFractalSimulator)(;printlog="coef")
 	initializeCount!(simulator) # set to be zero
 	initializeCoefficients!(simulator)
 	countUp!(simulator)
 	normalizeTensor!(simulator) 
 	
-	printCoefficientsLabel(simulator)
-	# printNormalizationFactor(simulator)
-	printCoefficients(simulator)
+	if printlog=="coef" 
+		printCoefficientsLabel(simulator)
+		printCoefficients(simulator)
+	elseif printlog=="norm"
+		# printNormalizationFactor(simulator)
+	end
+
 	while true
 		countUp!(simulator)
 		renormalizeSpace!(simulator, getDimM(simulator))
  		updateCoefficients!(simulator)
-	# printNormalizationFactor(simulator)
+		if printlog=="coef"
+			printCoefficients(simulator)
+		elseif printlog=="norm"
+			# printNormalizationFactor(simulator)
+		end
 	# magnetization = getExpectationValue(simulator) ###debug
-	printCoefficients(simulator)
  
  		countUp!(simulator, "trotter")
  		renormalizeTrotter!(simulator, getDimM(simulator))
  		normalizeTensor!(simulator)
  		updateCoefficients!(simulator,"trotter")
-	# printNormalizationFactor(simulator)
+		if printlog=="coef"
+			printCoefficients(simulator)
+		elseif printlog=="norm"
+			# printNormalizationFactor(simulator)
+		end
 	# magnetization = getExpectationValue(simulator) ###debug
-	printCoefficients(simulator)
  		if getCount(simulator) > getWholeiteration(simulator)
  			break
  		end

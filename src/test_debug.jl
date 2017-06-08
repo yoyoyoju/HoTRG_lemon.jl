@@ -23,7 +23,7 @@ simulator = buildSimulator(lattice,dimM)
 
 # fieldrange = linspace(0.1, 3.5, 10)
 fieldrange = 3.5
-simulatorQuantum(fieldrange, simulator; filename = "log_coef.txt")
+simulatorQuantum(fieldrange, simulator; filename = "log_coef.txt", printlog="coef")
  # simulatorQuantum(fieldrange, sqSimulator; filename = "q2s_m6_t30_ori_m7.txt")
 #tensorT = getTensorT(simulator)[1]
 #tenmatMMd = getTenmatMMd(tensorT)
