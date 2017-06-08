@@ -126,42 +126,43 @@ things checked :
 
 * count - ok
 * coefficients - ok for n_T at least
-* print out Norms
+* print out Norms - some numbers out standing:  
+  `q` or `ex` and `ey`
 
 """
+function printLog(simulator::Quantum2dFractalSimulator; printlog="none")
+	if printlog=="coef" 
+		printCoefficients(simulator)
+	elseif printlog=="norm"
+		printNormalizationFactor(simulator)
+	elseif printlog=="label"
+		printCoefficientsLabel(simulator)
+	end
+end
+
 function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 	initializeCount!(simulator) # set to be zero
 	initializeCoefficients!(simulator)
 	countUp!(simulator)
 	normalizeTensor!(simulator) 
 	
-	if printlog=="coef" 
-		printCoefficientsLabel(simulator)
-		printCoefficients(simulator)
-	elseif printlog=="norm"
-		printNormalizationFactor(simulator)
+	if printlog != "none"
+		printLog(simulator, printlog="label")
 	end
+	printLog(simulator, printlog=printlog)
 
 	while true
 		countUp!(simulator)
 		renormalizeSpace!(simulator, getDimM(simulator))
  		updateCoefficients!(simulator)
-		if printlog=="coef"
-			printCoefficients(simulator)
-		elseif printlog=="norm"
-			printNormalizationFactor(simulator)
-		end
+		printLog(simulator, printlog=printlog)
 	# magnetization = getExpectationValue(simulator) ###debug
  
  		countUp!(simulator, "trotter")
  		renormalizeTrotter!(simulator, getDimM(simulator))
  		normalizeTensor!(simulator)
  		updateCoefficients!(simulator,"trotter")
-		if printlog=="coef"
-			printCoefficients(simulator)
-		elseif printlog=="norm"
-			printNormalizationFactor(simulator)
-		end
+		printLog(simulator, printlog=printlog)
 	# magnetization = getExpectationValue(simulator) ###debug
  		if getCount(simulator) > getWholeiteration(simulator)
  			break
@@ -189,6 +190,10 @@ function getFreeEnergy{T}(simulator::Quantum2dFractalSimulator{T})
 											termFromNormFactor(simulator) +	
 										    termcorrection
 										   ) / numberofsites
+# 	println(getFirstTerm(simulator))
+# 	println(termFromNormFactor(simulator))
+# 	println(termcorrection)
+# 	println(numberofsites)
 	return freeenergy
 end
 

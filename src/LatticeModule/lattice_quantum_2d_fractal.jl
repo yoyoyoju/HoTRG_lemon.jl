@@ -65,7 +65,7 @@ function initializeTensorQ_q2d{T}(lattice::Quantum2dFractalLattice{T})
 	leng = size(factorW,1)==size(factorW,2) ? size(factorW,1) : throw(DomainError())
 	tensorQ = zeros(T,leng,leng,leng,leng) #; x y z zp
 	for a = 1:leng, x = 1:leng, y = 1:leng, z = 1:leng, zp = 1:leng
-		tensorQ +=
+		tensorQ[x,y,z,zp] +=
 		factorW[a,x] * factorW[a,y] *
 		factorWp[a,z] * factorWp[a,zp]
 	end
