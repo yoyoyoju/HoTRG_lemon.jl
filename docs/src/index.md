@@ -21,6 +21,16 @@ end
 
 ## HoTRG_lemon.SpinModule
 
+here
+
+```@contents
+Pages = [
+	"spinDocs/ex.md"
+	]
+Depth = 2
+```
+there
+
 ### Types
 
 ```@docs

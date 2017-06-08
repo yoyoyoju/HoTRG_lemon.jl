@@ -92,7 +92,12 @@ end
 
 function printNormalizationFactor(simulator::Quantum2dFractalSimulator)
 	iteration = getCount(simulator)
-	println(simulator.normalizationFactor[iteration,:])
+	lengCoef = getLengthOfNormList(simulator)
+	print(iteration, "\t")
+	for i = 1:lengCoef
+		@printf "%.5e\t" simulator.normalizationFactor[iteration,i]
+	end
+	println()
 end
 
 #---
@@ -124,7 +129,7 @@ things checked :
 * print out Norms
 
 """
-function (simulator::Quantum2dFractalSimulator)(;printlog="coef")
+function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 	initializeCount!(simulator) # set to be zero
 	initializeCoefficients!(simulator)
 	countUp!(simulator)
@@ -134,7 +139,7 @@ function (simulator::Quantum2dFractalSimulator)(;printlog="coef")
 		printCoefficientsLabel(simulator)
 		printCoefficients(simulator)
 	elseif printlog=="norm"
-		# printNormalizationFactor(simulator)
+		printNormalizationFactor(simulator)
 	end
 
 	while true
@@ -144,7 +149,7 @@ function (simulator::Quantum2dFractalSimulator)(;printlog="coef")
 		if printlog=="coef"
 			printCoefficients(simulator)
 		elseif printlog=="norm"
-			# printNormalizationFactor(simulator)
+			printNormalizationFactor(simulator)
 		end
 	# magnetization = getExpectationValue(simulator) ###debug
  
@@ -155,7 +160,7 @@ function (simulator::Quantum2dFractalSimulator)(;printlog="coef")
 		if printlog=="coef"
 			printCoefficients(simulator)
 		elseif printlog=="norm"
-			# printNormalizationFactor(simulator)
+			printNormalizationFactor(simulator)
 		end
 	# magnetization = getExpectationValue(simulator) ###debug
  		if getCount(simulator) > getWholeiteration(simulator)
