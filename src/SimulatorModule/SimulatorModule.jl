@@ -277,5 +277,6 @@ module SimulatorModule
 	include("simulator_fractal.jl")
 	include("f_normalizeAndSetnorm!.jl")
 	include("f_setNorm!.jl")
+	include("f_printlog.jl")
 
 end

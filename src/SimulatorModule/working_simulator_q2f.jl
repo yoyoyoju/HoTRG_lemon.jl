@@ -24,9 +24,7 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	function Quantum2dFractalSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int)
 		this = new{T}()
 		this.dimM = dimM
-		#morenorm# wholeiteration = getTrotteriteration(lattice) * 2
-		##### check how many iteration needed 
-		wholeiteration = getTrotteriteration(lattice) * 2 #morenorm#
+		wholeiteration = getTrotteriteration(lattice) * 2 
 		this.wholeiteration = wholeiteration
 		this.lattice = lattice
 		this.infoCoefficients = ["t", "px", "py", "q",
@@ -37,10 +35,6 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 					  "lccll", "eccll"]
 		numberOfCoefficients = getLengthOfNormList(this)
 		this.normalizationFactor = ones(T,wholeiteration+1,numberOfCoefficients)
-		#del#### this.normalizationFactor = Array{T,2}(wholeiteration+1,16)
-		#del#### norm should be filled by one
-		#del#### coef should be filled by zero
-		#del#### this.coefficients = Array{T,2}(wholeiteration+1,16)
 		this.coefficients = zeros(T,wholeiteration+1,numberOfCoefficients)
 		initializeCoefficients!(this)
 		initializeCount!(this)
@@ -72,36 +66,10 @@ function getIndexOf(simulator::Quantum2dFractalSimulator, normname::AbstractStri
 	return indexof
 end
 
-function printCoefficientsLabel(simulator::Quantum2dFractalSimulator)
-	print("count", "\t")
-	for i = 1:getLengthOfNormList(simulator)
-		print(getListOfNormFactors(simulator)[i],"\t")
-	end
-	println()
-end
-	 
-function printCoefficients(simulator::Quantum2dFractalSimulator)
-	iteration = getWholeiteration(simulator) +2 -getCount(simulator)
-	lengCoef = getLengthOfNormList(simulator)
-	print(iteration, "\t")
-	for i = 1:lengCoef
-		@printf "%.5e\t" simulator.coefficients[iteration,i]
-	end
-	println()
-end
-
-function printNormalizationFactor(simulator::Quantum2dFractalSimulator)
-	iteration = getCount(simulator)
-	lengCoef = getLengthOfNormList(simulator)
-	print(iteration, "\t")
-	for i = 1:lengCoef
-		@printf "%.5e\t" simulator.normalizationFactor[iteration,i]
-	end
-	println()
-end
 
 #---
 # run the simulator
+
 
 """
 * initial setup
@@ -132,20 +100,6 @@ things checked :
 * the  renormalization process
 
 """
-function printLog(simulator::Quantum2dFractalSimulator; printlog="none")
-	if printlog=="coef" 
-		printCoefficients(simulator)
-	elseif printlog=="norm"
-		printNormalizationFactor(simulator)
-	elseif printlog=="label"
-		printCoefficientsLabel(simulator)
-	elseif printlog=="mag"
-		magnetization = getExpectationValue(simulator)
-		println(magnetization)
-	elseif printlog=="magmute"
-		magnetization = getExpectationValue(simulator)
-	end
-end
 
 function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 	initializeCount!(simulator) # set to be zero
