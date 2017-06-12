@@ -231,12 +231,6 @@ function updateCoefficients!{T}(simulator::Quantum2dFractalInititerSimulator{T},
 end
 
 # normalization
-function normalizeAndSetNorm!{T}(simulator::Quantum2dFractalInititerSimulator{T}, tensor::Array, normname::AbstractString)
-	normedTensor, normalizationFactor = normalizeTensor(tensor)
-	setNorm!(simulator, normalizationFactor, getIndexOf(simulator, normname))
-	return normedTensor, normalizationFactor
-end
-
 function normalizeTensor!{T}(simulator::Quantum2dFractalInititerSimulator{T})
 	tensorT, tensorTtilde = getTensorT(simulator)
 	newTensorT, normT = normalizeTensor(tensorT)

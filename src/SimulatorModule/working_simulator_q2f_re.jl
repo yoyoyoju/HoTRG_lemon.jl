@@ -20,17 +20,30 @@ function renormalizeTrotter!{T}(simulator::Quantum2dFractalSimulator{T}, dimM::I
 		tensorT1 = tensorTtilde
  	end
 
+	# renormalize
+	  # get next tensorT's
+	  # projectors
 	nextTensorT, nextTensorTtilde, projectorUx, projectorUy = renormalizeTensorT_trotter(tensorT1, tensorT2, dimM , whichIsTensorT = whichisT)
 	nextTensorTtilde = symmetrizeTensorTrotter(nextTensorTtilde)
+	  # contract to get the next tensors
  	nextTensorPy = renormalizeTensorPy_trotter(tensorPy, projectorUx, projectorUy, dimM)
  	nextTensorPx = renormalizeTensorPx_trotter(tensorPx, projectorUx, projectorUy, dimM)
  	nextTensorQ = renormalizeTensorQ_trotter(tensorQ, projectorUx, projectorUy, dimM)
 
-	setTensorT!(lattice, nextTensorT)
-	setTensorT!(lattice, nextTensorTtilde; tilde = true)
- 	setTensorP!(lattice, 1, nextTensorPx)
- 	setTensorP!(lattice, 2, nextTensorPy)
- 	setTensorQ!(lattice, nextTensorQ)
+	# normalize
+	normedTensorT, normT = normalizeAndSetNorm!(simulator, nextTensorT, "t")
+	normedTensorTtilde = nextTensorTtilde ./ normT
+	normedTensorPx, normPx = normalizeAndSetNorm!(simulator, nextTensorPx, "px")
+	normedTensorPy, normPy = normalizeAndSetNorm!(simulator, nextTensorPy, "py")
+	normedTensorQ, normQ = normalizeAndSetNorm!(simulator, nextTensorQ, "q")
+
+
+	# set tensors
+	setTensorT!(lattice, normedTensorT)
+	setTensorT!(lattice, normedTensorTtilde; tilde = true)
+ 	setTensorP!(lattice, 1, normedTensorPx)
+ 	setTensorP!(lattice, 2, normedTensorPy)
+ 	setTensorQ!(lattice, normedTensorQ)
 
 end
 

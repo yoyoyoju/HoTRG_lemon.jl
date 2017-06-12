@@ -166,7 +166,6 @@ function (simulator::Quantum2dFractalSimulator)(;printlog="none")
  
  		countUp!(simulator, "trotter")
  		renormalizeTrotter!(simulator, getDimM(simulator))
- 		normalizeTensor!(simulator)
  		updateCoefficients!(simulator,"trotter")
 		printLog(simulator, printlog=printlog)
  		if getCount(simulator) > getWholeiteration(simulator)
@@ -280,12 +279,13 @@ function updateCoefficients!{T}(simulator::Quantum2dFractalSimulator{T}, trotter
 end
 
 # normalization
-function normalizeAndSetNorm!{T}(simulator::Quantum2dFractalSimulator{T}, tensor::Array, normname::AbstractString)
-	normedTensor, normalizationFactor = normalizeTensor(tensor)
-	setNorm!(simulator, normalizationFactor, getIndexOf(simulator, normname))
-	return normedTensor, normalizationFactor
-end
 
+"""
+	normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
+normalize T,Px,Py,Q tensors  
+set the normed tensors back to the lattice in simulator
+set the Norm to normalizationFactor  
+"""
 function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	tensorT, tensorTtilde = getTensorT(simulator)
 	newTensorT, normT = normalizeTensor(tensorT)
@@ -307,10 +307,6 @@ function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	setNorm!(simulator, normQ, getIndexOf(simulator, "q"))
 end
 
-function setNorm!{T}(simulator::Quantum2dFractalSimulator{T}, norm::T, which::Int)
-	iteration = getCount(simulator)
-	setNorm!(simulator, norm, which, iteration)
-end
 
 #---
 # functions for initialize
