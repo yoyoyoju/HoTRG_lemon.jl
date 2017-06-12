@@ -127,7 +127,9 @@ things checked :
 * count - ok
 * coefficients - ok for n_T at least
 * print out Norms - some numbers out standing:  
-  `q` or `ex` and `ey`
+  `q` or `ex` and `ey`  
+  fixed tensorQ : better free energy values
+* the  renormalization process
 
 """
 function printLog(simulator::Quantum2dFractalSimulator; printlog="none")
@@ -137,6 +139,11 @@ function printLog(simulator::Quantum2dFractalSimulator; printlog="none")
 		printNormalizationFactor(simulator)
 	elseif printlog=="label"
 		printCoefficientsLabel(simulator)
+	elseif printlog=="mag"
+		magnetization = getExpectationValue(simulator)
+		println(magnetization)
+	elseif printlog=="magmute"
+		magnetization = getExpectationValue(simulator)
 	end
 end
 
@@ -146,24 +153,22 @@ function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 	countUp!(simulator)
 	normalizeTensor!(simulator) 
 	
-	if printlog != "none"
+	if printlog in ["coef", "norm"]
 		printLog(simulator, printlog="label")
+		printLog(simulator, printlog=printlog)
 	end
-	printLog(simulator, printlog=printlog)
 
 	while true
 		countUp!(simulator)
 		renormalizeSpace!(simulator, getDimM(simulator))
  		updateCoefficients!(simulator)
 		printLog(simulator, printlog=printlog)
-	# magnetization = getExpectationValue(simulator) ###debug
  
  		countUp!(simulator, "trotter")
  		renormalizeTrotter!(simulator, getDimM(simulator))
  		normalizeTensor!(simulator)
  		updateCoefficients!(simulator,"trotter")
 		printLog(simulator, printlog=printlog)
-	# magnetization = getExpectationValue(simulator) ###debug
  		if getCount(simulator) > getWholeiteration(simulator)
  			break
  		end
@@ -176,10 +181,8 @@ end
 #---
 # functions for simulate
 
-#--- ##### need to be fixed
 # functions about free energy
 function getFreeEnergy{T}(simulator::Quantum2dFractalSimulator{T})
-	# numberofsites = sum(getCoefficient(simulator, 0, 1))
 	numberofsites = sum(getCoefficient(simulator,0,1)[1:4])
 
 
