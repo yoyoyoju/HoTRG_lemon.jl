@@ -73,9 +73,9 @@ end
 function getExpectationValue(simulator::Simulator)
 	tensorT, impurityTensorTtilde = getTensorT(simulator)
 	expectationvalue = traceTensorTPeriodic(impurityTensorTtilde) / traceTensorTPeriodic(tensorT)
-	println("traceT is \t", traceTensorTPeriodic(impurityTensorTtilde))
-	println("tractTt is\t",traceTensorTPeriodic(tensorT))
-	println("exp value\t", expectationvalue)
+	# println("traceT is \t", traceTensorTPeriodic(impurityTensorTtilde))
+	# println("tractTt is\t",traceTensorTPeriodic(tensorT))
+	# println("exp value\t", expectationvalue)
 	return expectationvalue
 end
 

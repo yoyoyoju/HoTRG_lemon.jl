@@ -244,7 +244,8 @@ module SimulatorModule
 		calculateCoreTensors,
 		# simulator_quantum_2d_fractal_inititer.jl
 		Quantum2dFractalInititerSimulator,
-		getInititeration
+		getInititeration,
+		printLog
 
 
 

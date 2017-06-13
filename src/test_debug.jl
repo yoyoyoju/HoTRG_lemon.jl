@@ -1,9 +1,18 @@
+#!/Users/yoyoyoju/.julia/v0.5/Contents/Resources/julia/bin/julia
+
 workspace()
+using Gallium
 using HoTRG_lemon.SimulatorModule
 using HoTRG_lemon.SpinModule
 using HoTRG_lemon.LatticeModule
 using TensorOperations
 using TensorMatrices_lemon
+
+#= debug
+Gallium.breakpoint(renormalizeSpace!)
+Gallium.breakpoint(renormalizeTrotter!)
+=# 
+
 
 dimM = 5
 trotterparameter = 0.01

@@ -21,7 +21,7 @@ simulator = buildSimulator(lattice,dimM)
 # println(simulator())
 # println(sqSimulator())
 
-fieldrange = linspace(0.1, 3.5, 10)
+fieldrange = linspace(0.1, 3.5, 20)
  simulatorQuantum(fieldrange, simulator; filename = "data_dim5.txt")
  # simulatorQuantum(fieldrange, sqSimulator; filename = "q2s_m6_t30_ori_m7.txt")
 #tensorT = getTensorT(simulator)[1]

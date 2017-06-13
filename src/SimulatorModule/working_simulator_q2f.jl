@@ -10,6 +10,43 @@
 # to do:
 1. bug fixing
 2. merge inititer to this
+
+----------
+# Things to check
+
+* initial setup - fixed tensorQ
+
+**loop**
+* spatial renormalization
+* trotter renormalization
+
+* get measurements
+
+-----
+The variables to update:
+* count
+* normalization factor
+* coefficients
+
+
+--------
+--------
+
+things checked :
+
+* count - ok
+* coefficients - ok
+* print out Norms - some numbers out standing:  - ok
+  `q` or `ex` and `ey`  
+  fixed tensorQ : better free energy values
+* the  renormalization process
+  * getting the projectors
+  * contract tensors
+  * after care
+    * rotating
+	* symmetrization
+	* setting
+	* normalizing
 """
 type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	dimM::Int
@@ -71,35 +108,6 @@ end
 # run the simulator
 
 
-"""
-* initial setup
-
-**loop**
-* spatial renormalization
-* trotter renormalization
-
-* get measurements
-
------
-The variables to update:
-* count
-* normalization factor
-* coefficients
-
-
---------
---------
-
-things checked :
-
-* count - ok
-* coefficients - ok for n_T at least
-* print out Norms - some numbers out standing:  
-  `q` or `ex` and `ey`  
-  fixed tensorQ : better free energy values
-* the  renormalization process
-
-"""
 
 function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 	initializeCount!(simulator) # set to be zero

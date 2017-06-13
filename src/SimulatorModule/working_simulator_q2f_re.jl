@@ -24,7 +24,7 @@ function renormalizeTrotter!{T}(simulator::Quantum2dFractalSimulator{T}, dimM::I
 	  # get next tensorT's
 	  # projectors
 	nextTensorT, nextTensorTtilde, projectorUx, projectorUy = renormalizeTensorT_trotter(tensorT1, tensorT2, dimM , whichIsTensorT = whichisT)
-	nextTensorTtilde = symmetrizeTensorTrotter(nextTensorTtilde)
+#debug	nextTensorTtilde = symmetrizeTensorTrotter(nextTensorTtilde)
 	  # contract to get the next tensors
  	nextTensorPy = renormalizeTensorPy_trotter(tensorPy, projectorUx, projectorUy, dimM)
  	nextTensorPx = renormalizeTensorPx_trotter(tensorPx, projectorUx, projectorUy, dimM)
@@ -125,6 +125,7 @@ function renormalizeSpace!{T}(simulator::Quantum2dFractalSimulator{T}, dimM::Int
   
 	tensorLegCore, tensorLegCoretilde = calculateTensorLegCore(tensorLeg, tensorCore, tensorCoretilde, dimM)
 	tensorLegCore, normLc = normalizeAndSetNorm!(simulator, tensorLegCore, "lc")
+	tensorLegCoretilde = tensorLegCoretilde ./ normLc
 	tensorCaretCore = calculateTensorCaretCore(tensorCaret, tensorCore, dimM)
 	tensorCaretCore, normEc = normalizeAndSetNorm!(simulator, tensorCaretCore, "ec")
   
@@ -180,7 +181,7 @@ function renormalizeSpace!{T}(simulator::Quantum2dFractalSimulator{T}, dimM::Int
 		nextTensorT = rotateTensorS_xy(tensorT)
 		nextTensorTtilde = rotateTensorS_xy(tensorTtilde)
 		# symmetrize tensorTtilde
-		nextTensorTtilde = symmetrizeTensorSpatial(nextTensorTtilde) 
+#debug  nextTensorTtilde = symmetrizeTensorSpatial(nextTensorTtilde) 
 		## LegCore, caret -> Px (lccll + caret = nextTensorPx = lcclle)
 		nextTensorPx = calculateTensorCoreCaret(tensorLegCore, tensorCaret, dimM)
 		nextTensorPx, normPx = normalizeAndSetNorm!(simulator, nextTensorPx, "px")
