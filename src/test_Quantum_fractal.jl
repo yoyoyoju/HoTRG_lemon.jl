@@ -5,7 +5,7 @@ using HoTRG_lemon.LatticeModule
 using TensorOperations
 using TensorMatrices_lemon
 
-dimM = 5
+dimM = 2
 trotterparameter = 0.01
 trotteriteration = 40
 
@@ -15,17 +15,5 @@ ising = QuantumIsingModel(isinginfo, trotterinfo)
 lattice = buildLattice("quantum_2d_fractal", ising)
 simulator = buildSimulator(lattice,dimM)
 
-# sqLattice = buildLattice("quantum_2d_square", ising)
-# sqSimulator = buildSimulator(sqLattice,dimM)
-
-# println(simulator())
-# println(sqSimulator())
-
 fieldrange = linspace(0.1, 3.5, 20)
- simulatorQuantum(fieldrange, simulator; filename = "data_dim5.txt")
- # simulatorQuantum(fieldrange, sqSimulator; filename = "q2s_m6_t30_ori_m7.txt")
-#tensorT = getTensorT(simulator)[1]
-#tenmatMMd = getTenmatMMd(tensorT)
-#Ul, lambdaVector, Uld = svd(tenmatMMd.matrix)
-#trunUl = truncMatrixU(Ul,dimM)
-#tensorU = matU2tenU(trunUl)
+simulatorQuantum(fieldrange, simulator; filename = "data_dim" * string(dimM)  * ".txt")
