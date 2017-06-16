@@ -1,5 +1,7 @@
 # HoTRG_lemon.jl Documentation
 
+[pages](https://yoyoyoju.github.io/HoTRG_lemon.jl/latest)
+
 ```@contents
 ```
 
