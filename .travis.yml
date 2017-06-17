@@ -1,6 +1,7 @@
 # Documentation: http://docs.travis-ci.com/user/languages/julia/
 language: julia
 os:
+  - linux
   - osx
 julia:
   - 0.5
@@ -12,7 +13,7 @@ env:
 #
 before_install:
   - julia -e 'Pkg.add("TensorOperations")'
-  - julia -e 'Pkg.clone("git:///github.com/yoyoyoju/TensorMatrices_lemon.git")'
+  - julia -e 'Pkg.add("TensorMatrices_lemon")'
 #script:
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
 #  - julia -e 'Pkg.clone(pwd()); Pkg.build("HoTRG_lemon"); Pkg.test("HoTRG_lemon"; coverage=true)'
