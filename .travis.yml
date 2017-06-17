@@ -12,6 +12,7 @@ env:
 # uncomment the following lines to override the default test script
 #
 before_install:
+  - julia -e 'Pkg.update()'
   - julia -e 'Pkg.add("TensorOperations")'
   - julia -e 'Pkg.add("TensorMatrices_lemon")'
 #script:
