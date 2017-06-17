@@ -276,7 +276,7 @@ module SimulatorModule
 	 include("simulator_quantum_2d_fractal_inititer.jl")
 	 include("renormalize_simulator_quantum_2d_fractal_inititer.jl")
 	include("simulator_fractal.jl")
-	include("f_normalizeAndSetnorm!.jl")
+	include("f_normalizeAndSetNorm!.jl")
 	include("f_setNorm!.jl")
 	include("f_printlog.jl")
 
