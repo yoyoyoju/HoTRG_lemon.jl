@@ -1,0 +1,1 @@
+field 	 ground_energy 	 magnetization_z 

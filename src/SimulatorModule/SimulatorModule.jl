@@ -245,7 +245,9 @@ module SimulatorModule
 		# simulator_quantum_2d_fractal_inititer.jl
 		Quantum2dFractalInititerSimulator,
 		getInititeration,
-		printLog
+		printLog,
+		#
+		getInititeration
 
 
 
@@ -279,5 +281,6 @@ module SimulatorModule
 	include("f_normalizeAndSetNorm!.jl")
 	include("f_setNorm!.jl")
 	include("f_printlog.jl")
+	include("f_getInititeration.jl")
 
 end

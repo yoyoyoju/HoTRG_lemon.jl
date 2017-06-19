@@ -65,9 +65,12 @@ function buildSimulator{T}(lattice::Quantum2dSquareLattice{T}, dimM::Int)
 end
 
 function buildSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int)
-	return Quantum2dFractalSimulator{T}(lattice, dimM)
+	return Quantum2dFractalSimulator{T}(lattice, dimM, 0)
 end
 
+function buildSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int, inititeration::Int)
+	return Quantum2dFractalSimulator{T}(lattice, dimM, inititeration)
+end
 #---
 # functions for the expectation values
 function getExpectationValue(simulator::Simulator)

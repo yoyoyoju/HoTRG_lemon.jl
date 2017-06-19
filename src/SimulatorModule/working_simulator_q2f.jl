@@ -4,53 +4,20 @@
 	Quantum2dFractalSimulator
 
 # arguments
+
 * `lattice::Quantum2dFractalLattice`
 * `dimM::Int` the maximum dimension for the tensors
+* `inititeration::Int` initial iteration (default=0)
 
 # to do:
-1. bug fixing
+1. bug fixing - DONE
 2. merge inititer to this
 
-----------
-# Things to check
-
-* initial setup - fixed tensorQ
-
-**loop**
-* spatial renormalization
-* trotter renormalization
-
-* get measurements
-
------
-The variables to update:
-* count
-* normalization factor
-* coefficients
-
-
---------
---------
-
-things checked :
-
-* count - ok
-* coefficients - ok
-* print out Norms - some numbers out standing:  - ok
-  `q` or `ex` and `ey`  
-  fixed tensorQ : better free energy values
-* the  renormalization process
-  * getting the projectors
-  * contract tensors
-  * after care
-    * rotating
-	* symmetrization
-	* setting
-	* normalizing
 """
 type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	dimM::Int
 	wholeiteration::Int
+	inititeration::Int
 	countiteration::Int
 	trottercount::Int
 	normalizationFactor::Array{T,2}
@@ -58,10 +25,11 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	lattice::Quantum2dFractalLattice{T}
 	infoCoefficients::Array{AbstractString,1}
 
-	function Quantum2dFractalSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int)
+	function Quantum2dFractalSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int, inititeration::Int)
 		this = new{T}()
 		this.dimM = dimM
-		wholeiteration = getTrotteriteration(lattice) * 2 
+		this.inititeration = inititeration
+		wholeiteration = getTrotteriteration(lattice) * 2 + inititeration
 		this.wholeiteration = wholeiteration
 		this.lattice = lattice
 		this.infoCoefficients = ["t", "px", "py", "q",
@@ -79,8 +47,11 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	end
 end
 
+Quantum2dFractalSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int, inititeration::Int) = 
+Quantum2dFractalSimulator{T}(lattice,dimM,inititeration)
 Quantum2dFractalSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int) = 
-Quantum2dFractalSimulator{T}(lattice,dimM)
+Quantum2dFractalSimulator{T}(lattice,dimM, 0)
+
 
 #--- refactor
 function getLengthOfNormList(simulator::Quantum2dFractalSimulator)
@@ -118,6 +89,15 @@ function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 	if printlog in ["coef", "norm"]
 		printLog(simulator, printlog="label")
 		printLog(simulator, printlog=printlog)
+	end
+
+	if getInititeration(simulator) >= 1
+		for i = 1:getInititeration(simulator)
+			countUp!(simulator, "trotter")
+			renormalizeTrotter!(simulator, getDimM(simulator))
+			updateCoefficients!(simulator, "trotter")
+			printLog(simulator, printlog=printlog)
+		end
 	end
 
 	while true
