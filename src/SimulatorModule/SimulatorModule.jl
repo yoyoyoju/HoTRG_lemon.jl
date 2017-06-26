@@ -247,7 +247,12 @@ module SimulatorModule
 		getInititeration,
 		printLog,
 		#
-		getInititeration
+		getInititeration,
+		getLogNorms,
+		setLogNorms,
+		setNumberOfSites!,
+		getNumberOfSites,
+		initialize
 
 
 

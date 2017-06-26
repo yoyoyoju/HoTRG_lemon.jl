@@ -7,6 +7,19 @@ import HoTRG_lemon.LatticeModule:
 	setTrotterIteration!
 	
 
+"""
+	QuantumSimulator
+
+Under `Simulator`
+
+
+# methods:
+
+* `getTrotterparameter(QuantumSimulator)` - get tau  
+* `getTrotteriteration(QS)`
+* `getTrotterlayers(QS)`
+
+"""
 abstract QuantumSimulator{T} <: Simulator{T}
 abstract Quantum2dSimulator{T} <: QuantumSimulator{T}
 

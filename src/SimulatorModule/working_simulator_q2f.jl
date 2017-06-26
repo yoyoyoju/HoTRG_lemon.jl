@@ -9,9 +9,16 @@
 * `dimM::Int` the maximum dimension for the tensors
 * `inititeration::Int` initial iteration (default=0)
 
+
 # to do:
-1. bug fixing - DONE
-2. merge inititer to this
+
+1. fix the way to store norms
+
+
+# note:
+
+* `logNorms::Array{T,1}` - store logarithm of normalization factors
+* `numberOfSites::T` - store number of sites
 
 """
 type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
@@ -20,10 +27,9 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 	inititeration::Int
 	countiteration::Int
 	trottercount::Int
-	normalizationFactor::Array{T,2}
-	coefficients::Array{T,2}
 	lattice::Quantum2dFractalLattice{T}
-	infoCoefficients::Array{AbstractString,1}
+	logNorms::Array{T,1}
+	numberOfSites::T
 
 	function Quantum2dFractalSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int, inititeration::Int)
 		this = new{T}()
@@ -32,17 +38,9 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 		wholeiteration = getTrotteriteration(lattice) * 2 + inititeration
 		this.wholeiteration = wholeiteration
 		this.lattice = lattice
-		this.infoCoefficients = ["t", "px", "py", "q",
-					  "c", "ly", "ey",
-					  "lc", "cl", "ec", 
-					  "lccl", "eccl",
-					  "lx", "ex",
-					  "lccll", "eccll"]
-		numberOfCoefficients = getLengthOfNormList(this)
-		this.normalizationFactor = ones(T,wholeiteration+1,numberOfCoefficients)
-		this.coefficients = zeros(T,wholeiteration+1,numberOfCoefficients)
-		initializeCoefficients!(this)
 		initializeCount!(this)
+		logNorms = zeros(T,3)
+		numberOfSites = one(T)
 		return this
 	end
 end
@@ -53,37 +51,76 @@ Quantum2dFractalSimulator{T}(lattice::Quantum2dFractalLattice{T}, dimM::Int) =
 Quantum2dFractalSimulator{T}(lattice,dimM, 0)
 
 
-#--- refactor
-function getLengthOfNormList(simulator::Quantum2dFractalSimulator)
-	return length(simulator.infoCoefficients)
+#---
+# methods
+function getLogNorms(simulator::Quantum2dFractalSimulator)
+	return simulator.logNorms
 end
 
-function getListOfNormFactors(simulator::Quantum2dFractalSimulator)
-	return simulator.infoCoefficients
+"""
+	getLogNorms
+return stored log(Norm) value
+
+# arguments:
+
+* simulator
+* which::Int 4 to 6
+  - `6` for log(T6) : stored in the logNorms[1]
+  - `5` for log(T5) : stored in the logNorms[2]
+  - `4` for log(T4) : stored in the logNorms[3]
+
+"""
+function getLogNorms(simulator::Quantum2dFractalSimulator, which::Int)
+	return simulator.logNorms[7-which]
 end
 
-function getIndexOf(simulator::Quantum2dFractalSimulator, normname::AbstractString)
-	listOfNormFactors = getListOfNormFactors(simulator)
-	indexof = 0
-	for (i,a) in enumerate(listOfNormFactors)
-		if a == normname
-			indexof = i
-		end
+"""
+	setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::Int, lognorm::T)
+"""
+function setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::Int, lognorm::T)
+	simulator.logNorms[7-which] = lognorm
+end
+
+"""
+	getNumberOfSites(simulator::Quantum2dFractalSimulator{T})
+"""
+function getNumberOfSites(simulator::Quantum2dFractalSimulator{T})
+	return simulator.numberOfSites
+end
+
+"""
+	setNumberOfSites!(simulator::Quantum2dFractalSimulator, NOS)
+"""
+function setNumberOfSites!{T}(simulator::Quantum2dFractalSimulator{T}, NOS::T)
+	simulator.numberOfSites = NOS
+end
+
+"""
+	initializeSim(simulator::Quantum2dFractalSimulator)
+
+# set:
+
+* count = 1
+* NumberOfSites = 1
+* logNorms = {0,0,0}
+"""
+function initializeSim{T}(simulator::Quantum2dFractalSimulator{T})
+	initializeCount!(simulator) # set to be zero
+	countUp!(simulator)
+	setNumberOfSites!(simulator,one(T))
+	for i = 4:6
+		setLogNorms!(simulator, which, zero(T))
 	end
-	indexof == 0 && error("input for getIndexOf is wrong")
-	return indexof
 end
-
 
 #---
 # run the simulator
 
-
-
 function (simulator::Quantum2dFractalSimulator)(;printlog="none")
-	initializeCount!(simulator) # set to be zero
-	initializeCoefficients!(simulator)
-	countUp!(simulator)
+	initializeSim(simulator)
+
+	# add the first logged norms
+	##### to do
 	normalizeTensor!(simulator) 
 	
 	if printlog in ["coef", "norm"]

@@ -94,6 +94,7 @@ HoTRG_lemon.LatticeModule.initialize!
 ### Types
 
 ```@docs
+HoTRG_lemon.SimulatorModule.QuantumSimulator
 HoTRG_lemon.SimulatorModule.Quantum2dFractalSimulator
 ```
 
