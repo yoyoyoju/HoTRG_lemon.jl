@@ -15,8 +15,6 @@ ising = QuantumIsingModel(isinginfo, trotterinfo)
 lattice = buildLattice("quantum_2d_fractal", ising)
 simulator = buildSimulator(lattice,dimM)
 
-# fieldrange = linspace(0.1, 3.5, 10)
-# fieldrange = 0.1
-print("Input Float for fieldrange: ")
+print("Input Float for external field: ")
 fieldrange = parse(Float64, readline())
-simulatorQuantum(fieldrange, simulator; filename = "log_mag.txt", printlog="mag")
+simulatorQuantum(fieldrange, simulator; filename = "log.txt")

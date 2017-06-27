@@ -39,8 +39,8 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 		this.wholeiteration = wholeiteration
 		this.lattice = lattice
 		initializeCount!(this)
-		logNorms = zeros(T,3)
-		numberOfSites = one(T)
+		this.logNorms = zeros(T,3)
+		this.numberOfSites = one(T)
 		return this
 	end
 end
@@ -81,10 +81,14 @@ function setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::Int, lo
 	simulator.logNorms[7-which] = lognorm
 end
 
+function setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, lognorms::Array{T,1})
+	simulator.logNorms = lognorms
+end
+
 """
 	getNumberOfSites(simulator::Quantum2dFractalSimulator{T})
 """
-function getNumberOfSites(simulator::Quantum2dFractalSimulator{T})
+function getNumberOfSites{T}(simulator::Quantum2dFractalSimulator{T})
 	return simulator.numberOfSites
 end
 
@@ -108,7 +112,7 @@ function initializeSim{T}(simulator::Quantum2dFractalSimulator{T})
 	initializeCount!(simulator) # set to be zero
 	countUp!(simulator)
 	setNumberOfSites!(simulator,one(T))
-	for i = 4:6
+	for which = 4:6
 		setLogNorms!(simulator, which, zero(T))
 	end
 end
@@ -119,41 +123,41 @@ end
 function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 	initializeSim(simulator)
 
-	# add the first logged norms
-	##### to do
-	normalizeTensor!(simulator) 
-	
-	if printlog in ["coef", "norm"]
-		printLog(simulator, printlog="label")
-		printLog(simulator, printlog=printlog)
-	end
+	setLogNorms!(simulator, normalizeTensor!(simulator))
 
-	if getInititeration(simulator) >= 1
-		for i = 1:getInititeration(simulator)
-			countUp!(simulator, "trotter")
-			renormalizeTrotter!(simulator, getDimM(simulator))
-			updateCoefficients!(simulator, "trotter")
-			printLog(simulator, printlog=printlog)
-		end
-	end
-
-	while true
-		countUp!(simulator)
-		renormalizeSpace!(simulator, getDimM(simulator))
- 		updateCoefficients!(simulator)
-		printLog(simulator, printlog=printlog)
+	### printLog should be fixed
+# 	if printlog in ["coef", "norm"]
+# 		printLog(simulator, printlog="label")
+# 		printLog(simulator, printlog=printlog)
+# 	end
  
- 		countUp!(simulator, "trotter")
- 		renormalizeTrotter!(simulator, getDimM(simulator))
- 		updateCoefficients!(simulator,"trotter")
-		printLog(simulator, printlog=printlog)
- 		if getCount(simulator) > getWholeiteration(simulator)
- 			break
+ 	if getInititeration(simulator) >= 1
+ 		for i = 1:getInititeration(simulator)
+ 			countUp!(simulator, "trotter")
+#			renormalizeTrotter!(simulator, getDimM(simulator))
+# 			updateCoefficients!(simulator, "trotter")
+# 			printLog(simulator, printlog=printlog)
  		end
-	end
-	freeenergy = getFreeEnergy(simulator) ###### count the trotter into
-	magnetization = getExpectationValue(simulator)
-	return freeenergy, magnetization
+ 	end
+# 
+# 	while true
+# 		countUp!(simulator)
+# 		renormalizeSpace!(simulator, getDimM(simulator))
+#  		updateCoefficients!(simulator)
+# 		printLog(simulator, printlog=printlog)
+#  
+#  		countUp!(simulator, "trotter")
+#  		renormalizeTrotter!(simulator, getDimM(simulator))
+#  		updateCoefficients!(simulator,"trotter")
+# 		printLog(simulator, printlog=printlog)
+#  		if getCount(simulator) > getWholeiteration(simulator)
+#  			break
+#  		end
+# 	end
+# 	freeenergy = getFreeEnergy(simulator) ###### count the trotter into
+# 	magnetization = getExpectationValue(simulator)
+# 	return freeenergy, magnetization
+	return 0.1, 0.2
 end
 
 #---
@@ -263,7 +267,7 @@ end
 	normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 normalize T,Px,Py,Q tensors  
 set the normed tensors back to the lattice in simulator
-set the Norm to normalizationFactor  
+return a vector with [log(normT), log(normP), log(normQ)]
 """
 function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	tensorT, tensorTtilde = getTensorT(simulator)
@@ -272,18 +276,15 @@ function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	setTensorT!(simulator, newTensorT)
 	setTensorT!(simulator, newTensorTtilde; tilde = true)
 
-	newTensorPx, normPx = normalizeTensor(getTensorP(simulator, 1))
+	newTensorPx, normP = normalizeTensor(getTensorP(simulator, 1))
 	setTensorP!(simulator, 1, newTensorPx)
-	newTensorPy, normPy = normalizeTensor(getTensorP(simulator, 2))
+	newTensorPy = getTensorP(simulator,2) ./ normP
 	setTensorP!(simulator, 2, newTensorPy)
 
 	newTensorQ, normQ = normalizeTensor(getTensorQ(simulator))
 	setTensorQ!(simulator, newTensorQ)
-
-	setNorm!(simulator, normT, getIndexOf(simulator, "t"))
-	setNorm!(simulator, normPx, getIndexOf(simulator, "px"))
-	setNorm!(simulator, normPy, getIndexOf(simulator, "py"))
-	setNorm!(simulator, normQ, getIndexOf(simulator, "q"))
+	
+	return [log(normT), log(normP), log(normQ)]
 end
 
 
