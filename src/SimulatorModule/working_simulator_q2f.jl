@@ -64,7 +64,7 @@ return stored log(Norm) value
 # arguments:
 
 * simulator
-* which::Int 4 to 6
+* which::Int 4 to 6 (optional, without will return the Array{T,1})
   - `6` for log(T6) : stored in the logNorms[1]
   - `5` for log(T5) : stored in the logNorms[2]
   - `4` for log(T4) : stored in the logNorms[3]
@@ -100,6 +100,25 @@ function setNumberOfSites!{T}(simulator::Quantum2dFractalSimulator{T}, NOS::T)
 end
 
 """
+	updateNumberOfSites!{T}(simulator::Quantum2dFractalSimulator{T}, which::AbstractString)
+
+# argurments:
+
+* simulator
+* which::String - "space" or "trotter"  
+  - 'space' multiply by 12 times
+  - 'trotter' multiply by 2 times
+"""
+function updateNumberOfSites!{T}(simulator::Quantum2dFractalSimulator{T}, which::AbstractString)
+	if which == "space"
+		coef = 12
+	elseif which == "trotter"
+		coef = 2
+	end
+	setNumberOfSites!(simulator, coef * getNumberOfSites(simulator))
+end
+
+"""
 	initializeSim(simulator::Quantum2dFractalSimulator)
 
 # set:
@@ -130,34 +149,38 @@ function (simulator::Quantum2dFractalSimulator)(;printlog="none")
 # 		printLog(simulator, printlog="label")
 # 		printLog(simulator, printlog=printlog)
 # 	end
+ 		printLog(simulator, printlog=printlog)
  
  	if getInititeration(simulator) >= 1
  		for i = 1:getInititeration(simulator)
  			countUp!(simulator, "trotter")
-#			renormalizeTrotter!(simulator, getDimM(simulator))
-# 			updateCoefficients!(simulator, "trotter")
-# 			printLog(simulator, printlog=printlog)
+			renormalizeTrotter!(simulator, getDimM(simulator))
+ 			printLog(simulator, printlog=printlog)
+			normalizeUpdateLogNorms!(simulator, "trotter")
+ 			printLog(simulator, printlog=printlog)
+			### gotta update "length" (numberOfSites)
  		end
  	end
-# 
-# 	while true
-# 		countUp!(simulator)
-# 		renormalizeSpace!(simulator, getDimM(simulator))
-#  		updateCoefficients!(simulator)
-# 		printLog(simulator, printlog=printlog)
-#  
-#  		countUp!(simulator, "trotter")
-#  		renormalizeTrotter!(simulator, getDimM(simulator))
-#  		updateCoefficients!(simulator,"trotter")
-# 		printLog(simulator, printlog=printlog)
-#  		if getCount(simulator) > getWholeiteration(simulator)
-#  			break
-#  		end
-# 	end
-# 	freeenergy = getFreeEnergy(simulator) ###### count the trotter into
-# 	magnetization = getExpectationValue(simulator)
-# 	return freeenergy, magnetization
-	return 0.1, 0.2
+ 
+ 	while true
+ 		countUp!(simulator)
+ 		renormalizeSpace!(simulator, getDimM(simulator))
+ 		printLog(simulator, printlog=printlog)
+		normalizeUpdateLogNorms!(simulator, "space")
+ 		printLog(simulator, printlog=printlog)
+  
+  		countUp!(simulator, "trotter")
+  		renormalizeTrotter!(simulator, getDimM(simulator))
+ 		printLog(simulator, printlog=printlog)
+		normalizeUpdateLogNorms!(simulator, "trotter")
+ 		printLog(simulator, printlog=printlog)
+  		if getCount(simulator) > getWholeiteration(simulator)
+  			break
+  		end
+ 	end
+ 	freeenergy = getFreeEnergy(simulator)
+ 	magnetization = getExpectationValue(simulator)
+ 	return freeenergy, magnetization
 end
 
 #---
@@ -165,109 +188,22 @@ end
 
 # functions about free energy
 function getFreeEnergy{T}(simulator::Quantum2dFractalSimulator{T})
-	numberofsites = sum(getCoefficient(simulator,0,1)[1:4])
+	freeenergy = getLogNorms(simulator, 6) / getTrotterparameter(simulator)
 
-
-	tensorT = getTensorT(simulator)[1]
-	termcorrection = log(traceTensorTPeriodic(tensorT))
-
-	freeenergy = - getFirstTerm(simulator) * (
-											termFromNormFactor(simulator) +	
-										    termcorrection
-										   ) / numberofsites
-# 	println(getFirstTerm(simulator))
-# 	println(termFromNormFactor(simulator))
-# 	println(termcorrection)
-# 	println(numberofsites)
 	return freeenergy
-end
-
-function termFromNormFactor{T}(simulator::Quantum2dFractalSimulator{T})
-	termNorm = zero(T)
-	for i in 1:getCount(simulator)
-		for j in 1:getLengthOfNormList(simulator)
-			termNorm += getCoefficient(simulator, j, i) * log(getNorm(simulator, j, i))
-		end
-	end
-	return termNorm
-end
-
-# coefficients
-
-function initializeCoefficients!{T}(simulator::Quantum2dFractalSimulator{T})
-	wholeiteration = getWholeiteration(simulator) 
-	setCoefficient!(simulator, 1.0, getIndexOf(simulator, "t"), wholeiteration + 1)
-end
-
-function updateCoefficients!{T}(simulator::Quantum2dFractalSimulator{T})
-	iteration = getWholeiteration(simulator) +2 -getCount(simulator)
-	# depends on the order of the storing of the coefficients! 
-	currentCoef = getCoefficient(simulator, 0, iteration+1)[1:4]
-	evolveMatrix = # this is 16 x 4 matrix
-	#	t	px	py	q
-	[	4	4	4	4; #t
-  		4	2	4	2; #px
-		4	4	2	2; #py
-		0	4	0	4; #q
-		2	2	2	2; #c
-		2	1	2	1; #ly
-		0	1	0	1; #ey
-		2	1	2	1; #lc
-		0	0	0	0; #cl
-		0	1	0	1; #ec
-		1	0	1	0; #lccl
-		0	1	0	1; #eccl
-		2	2	1	1; #lx
-		0	0	1	1; #ex
-		1	0	1	0; #lccll
-		0	1	0	1] #eccll
-	nextCoef = evolveMatrix * currentCoef
-	setCoefficients!(simulator, nextCoef, iteration)
-end
-
-# move them to 'simulator_fractal.jl' when it works
-function setCoefficients!{T}(simulator::Quantum2dFractalSimulator{T}, nextCoef::Array{T,1}, iteration::Int; lengthNextCoef::Int = getLengthOfNormList(simulator))
-	length(nextCoef) == lengthNextCoef || error("input length does not match")
-	for i in 1:lengthNextCoef 
-		setCoefficient!(simulator, nextCoef[i], i, iteration)
-	end
-end
-
-##### input: simulator
-#=
-from the input get
-iteration: the current step
-currentCoef: the current coefficients in vector (1-dim array) form
-	(but what we need is only the four values,,, so, actually
-	it does not work directly from the getCoef function. Either
-		-del- change the getCoef function
-		-change the results by limiting 
-		WE DO DEAL WITH THE RESULTS (but still check the func getCoef)
--
-store a 2-dim array to get the way to evolve the coefficients
--
-output a one-dim array with more values than the currentCoef
-	-del- Do not, yet, set the values to the simulator?
-Or, yes, do store the new values to the simulator?
-WE DO SET THE VALUES TO THE SIMULATOR
-=# 
-
-function updateCoefficients!{T}(simulator::Quantum2dFractalSimulator{T}, trotter::AbstractString)
-	if trotter == "trotter"
-		iteration = getWholeiteration(simulator) +2 -getCount(simulator)
-		currentCoef = getCoefficient(simulator, 0, iteration+1)[1:4]
-		newCoef = currentCoef .* 2.0
-		setCoefficients!(simulator, newCoef, iteration, lengthNextCoef = 4)
-	end
 end
 
 # normalization
 
 """
 	normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
-normalize T,Px,Py,Q tensors  
-set the normed tensors back to the lattice in simulator
-return a vector with [log(normT), log(normP), log(normQ)]
+
+# fucntion:
+
+* normalize T,Px,Py,Q tensors  
+* set the normed tensors back to the lattice in simulator
+* return a vector with [log(normT), log(normP), log(normQ)]  
+  in other notation: [logt6 logt5 logt4]
 """
 function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	tensorT, tensorTtilde = getTensorT(simulator)
@@ -285,6 +221,37 @@ function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	setTensorQ!(simulator, newTensorQ)
 	
 	return [log(normT), log(normP), log(normQ)]
+end
+
+
+"""
+	normalizeUpdateLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::AbstractString)
+
+# function:
+
+* update number of sites according to 'which'
+* normalize tensors from the input simulator
+* set the normalized tensors to the input simulator
+* set and return the next logNorms based on the previous logNorms and the normalization factors
+
+# arguments:
+
+* which::AbstractString - either 'space' or 'trotter'  
+  calculate the logNorms based on one of the input
+"""
+function normalizeUpdateLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::AbstractString)
+	updateNumberOfSites!(simulator, which)
+	previousLogNorms = getLogNorms(simulator)
+	currentLogt = normalizeTensor!(simulator)
+	if which == "space"
+		eMatrix = [4 8 0; 4 6 2; 4 4 4] ./ 12
+	elseif which == "trotter"
+		eMatrix = eye(T,3)
+	end
+
+	nextLogNorms = eMatrix * previousLogNorms + currentLogt./getNumberOfSites(simulator)
+	setLogNorms!(simulator, nextLogNorms)
+	return nextLogNorms
 end
 
 

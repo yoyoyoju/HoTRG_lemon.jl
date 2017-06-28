@@ -3,29 +3,39 @@
 
 # option `printtlog`:  
 
-* "none" : default - print nothing
-* "coef"
-* "norm"
-* "label" : print the labels for coeficients
 * "mag"
 * "magmute" : calculate magnetization for every renorm steps without printing
+* "logNorms"
+* "maxT"
 
 """
 function printLog(simulator::Quantum2dFractalSimulator; printlog="none")
-	if printlog=="coef" 
-		printCoefficients(simulator)
-	elseif printlog=="norm"
-		printNormalizationFactor(simulator)
-	elseif printlog=="label"
-		printCoefficientsLabel(simulator)
-	elseif printlog=="mag"
+	if printlog=="mag"
 		magnetization = getExpectationValue(simulator)
 		println(magnetization)
 	elseif printlog=="magmute"
 		magnetization = getExpectationValue(simulator)
+	elseif printlog=="logNorms"
+		printLogNorms(simulator)
+	elseif printlog=="maxTensor"
+		print(maximum(abs(simulator.lattice.tensorT)))
+		print("\t")
+		print(maximum(abs(getTensorP(simulator.lattice,1))))
+		print("\t")
+		print(maximum(abs(getTensorP(simulator.lattice,2))))
+		print("\t")
+		print(maximum(abs(simulator.lattice.tensorQ)))
+		println()
 	end
 end
 
+
+function printLogNorms(simulator::Quantum2dFractalSimulator)
+	println(simulator.logNorms)
+end
+
+###========================
+###========== under this I don't need
 function printCoefficientsLabel(simulator::Quantum2dFractalSimulator)
 	print("count", "\t")
 	for i = 1:getLengthOfNormList(simulator)
