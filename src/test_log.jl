@@ -18,6 +18,6 @@ simulator = buildSimulator(lattice,dimM, inititer)
 
 # print("Input Float for external field: ")
 # fieldrange = parse(Float64, readline())
-fieldrange = 3.0
+fieldrange = 3.5
 # simulatorQuantum(fieldrange, simulator; filename = "log.txt")
-simulator(printlog="maxTensor")
+simulator(printlog="logNorms")

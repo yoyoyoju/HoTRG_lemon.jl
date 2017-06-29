@@ -39,7 +39,7 @@ type Quantum2dFractalSimulator{T} <: Quantum2dSimulator{T}
 		this.wholeiteration = wholeiteration
 		this.lattice = lattice
 		initializeCount!(this)
-		this.logNorms = zeros(T,3)
+		this.logNorms = zeros(T,4)
 		this.numberOfSites = one(T)
 		return this
 	end
@@ -64,21 +64,37 @@ return stored log(Norm) value
 # arguments:
 
 * simulator
-* which::Int 4 to 6 (optional, without will return the Array{T,1})
+* which::String 4, 5x, 5y, 6 (optional, without will return the Array{T,1})
   - `6` for log(T6) : stored in the logNorms[1]
-  - `5` for log(T5) : stored in the logNorms[2]
-  - `4` for log(T4) : stored in the logNorms[3]
+  - `5x` for log(T5x) : stored in the logNorms[2]
+  - `5y` for log(T5y) : stored in the logNorms[3]
+  - `4` for log(T4) : stored in the logNorms[4]
 
 """
-function getLogNorms(simulator::Quantum2dFractalSimulator, which::Int)
-	return simulator.logNorms[7-which]
+function getLogNorms(simulator::Quantum2dFractalSimulator, which::AbstractString)
+	indexNumber = getIndexWhich(which)
+	return simulator.logNorms[indexNumber]
+end
+
+function getIndexWhich(which::AbstractString)
+	if which == "6"
+		indexNumber = 1
+	elseif which == "5x"
+		indexNumber = 2
+	elseif which == "5y"
+		indexNumber = 3
+	elseif which == "4"
+		indexNumber = 4
+	end
+	return indexNumber
 end
 
 """
-	setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::Int, lognorm::T)
+	setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::String, lognorm::T)
 """
-function setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::Int, lognorm::T)
-	simulator.logNorms[7-which] = lognorm
+function setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, which::AbstractString, lognorm::T)
+	indexNumber = getIndexWhich(which)
+	simulator.logNorms[indexNumber] = lognorm
 end
 
 function setLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, lognorms::Array{T,1})
@@ -125,15 +141,13 @@ end
 
 * count = 1
 * NumberOfSites = 1
-* logNorms = {0,0,0}
+* logNorms = {0,0,0,0}
 """
 function initializeSim{T}(simulator::Quantum2dFractalSimulator{T})
 	initializeCount!(simulator) # set to be zero
 	countUp!(simulator)
 	setNumberOfSites!(simulator,one(T))
-	for which = 4:6
-		setLogNorms!(simulator, which, zero(T))
-	end
+	setLogNorms!(simulator, zeros(T,4))
 end
 
 #---
@@ -188,7 +202,7 @@ end
 
 # functions about free energy
 function getFreeEnergy{T}(simulator::Quantum2dFractalSimulator{T})
-	freeenergy = getLogNorms(simulator, 6) / getTrotterparameter(simulator)
+	freeenergy = getLogNorms(simulator, "6") / getTrotterparameter(simulator)
 
 	return freeenergy
 end
@@ -202,8 +216,8 @@ end
 
 * normalize T,Px,Py,Q tensors  
 * set the normed tensors back to the lattice in simulator
-* return a vector with [log(normT), log(normP), log(normQ)]  
-  in other notation: [logt6 logt5 logt4]
+* return a vector with [log(normT), log(normPx), log(normPy), log(normQ)]  
+  in other notation: [logt6 logt5x logt5y logt4]
 """
 function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	tensorT, tensorTtilde = getTensorT(simulator)
@@ -212,15 +226,15 @@ function normalizeTensor!{T}(simulator::Quantum2dFractalSimulator{T})
 	setTensorT!(simulator, newTensorT)
 	setTensorT!(simulator, newTensorTtilde; tilde = true)
 
-	newTensorPx, normP = normalizeTensor(getTensorP(simulator, 1))
+	newTensorPx, normPx = normalizeTensor(getTensorP(simulator, 1))
 	setTensorP!(simulator, 1, newTensorPx)
-	newTensorPy = getTensorP(simulator,2) ./ normP
+	newTensorPy, normPy = normalizeTensor(getTensorP(simulator, 2))
 	setTensorP!(simulator, 2, newTensorPy)
 
 	newTensorQ, normQ = normalizeTensor(getTensorQ(simulator))
 	setTensorQ!(simulator, newTensorQ)
 	
-	return [log(normT), log(normP), log(normQ)]
+	return [log(normT), log(normPx), log(normPy), log(normQ)]
 end
 
 
@@ -244,9 +258,9 @@ function normalizeUpdateLogNorms!{T}(simulator::Quantum2dFractalSimulator{T}, wh
 	previousLogNorms = getLogNorms(simulator)
 	currentLogt = normalizeTensor!(simulator)
 	if which == "space"
-		eMatrix = [4 8 0; 4 6 2; 4 4 4] ./ 12
+		eMatrix = [4 4 4 0; 4 4 2 2; 4 2 4 2 ; 4 2 2 4] ./ 12
 	elseif which == "trotter"
-		eMatrix = eye(T,3)
+		eMatrix = eye(T,4)
 	end
 
 	nextLogNorms = eMatrix * previousLogNorms + currentLogt./getNumberOfSites(simulator)
