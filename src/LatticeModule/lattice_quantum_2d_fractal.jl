@@ -15,8 +15,13 @@ type Quantum2dFractalLattice{T} <: Quantum2dLattice{T}
 	legextension::Int
 	tensorT::Array{T,6} # ; x,xp,y,yp,z,zp
 	tensorTtilde::Array{T,6}
-	tensorP::Array{Array{T,5},1}# leg tensor; x,xp,s,z,zp
-	tensorQ::Array{T,4} # corner tensor; x,y,z,zp
+	tensorP::Array{Array{T,5},1} 
+			# Array of tensorPs
+			# xleft, xright, yup, ydown 
+			# leg tensor; x,xp,s,z,zp - deleteme
+	tensorQ::Array{Array{T,4},1} # corner tensor; x,y,z,zp
+			# Array of tensorQs:
+			# 
 	function Quantum2dFractalLattice{T}(spinmodel::QuantumSpinModel{T}, legextension::Int)
 		this = new{T}()
  		this.spinmodel = spinmodel
